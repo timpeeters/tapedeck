@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recorder {
-    private List<Recording> recordings = new ArrayList<>();
+    private final List<Recording> recordings = new ArrayList<>();
 
     public void record(Request request, Response response) {
         recordings.add(new Recording(request, response));

@@ -53,7 +53,7 @@ public class Response {
     public static class Builder {
         private String statusCode;
         private String statusText;
-        private Map<String, List<String>> headers = new HashMap<>();
+        private final Map<String, List<String>> headers = new HashMap<>();
         private byte[] body;
 
         public Builder statusCode(String statusCode) {
