@@ -39,7 +39,7 @@ public class Request {
 
     public static Builder get(String uri) {
         try {
-            return new Builder().method(RequestMethod.GET).uri(new URI(uri));
+            return builder().method(RequestMethod.GET).uri(new URI(uri));
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
