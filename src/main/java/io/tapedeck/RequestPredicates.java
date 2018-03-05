@@ -2,7 +2,7 @@ package io.tapedeck;
 
 import java.util.function.Predicate;
 
-public class RequestPredicates {
+public final class RequestPredicates {
     private RequestPredicates() {
     }
 
