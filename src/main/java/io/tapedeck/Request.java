@@ -60,8 +60,12 @@ public class Request {
     }
 
     public static Builder post() {
+        return post("");
+    }
+
+    public static Builder post(String uri) {
         try {
-            return new Builder().method(RequestMethod.POST).uri(new URI(""));
+            return new Builder().method(RequestMethod.POST).uri(new URI(uri));
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
