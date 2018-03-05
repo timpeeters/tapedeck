@@ -2,6 +2,7 @@ plugins {
     id "checkstyle"
     id "jacoco"
     id "java"
+    id "pmd"
 }
 
 repositories {
@@ -28,5 +29,14 @@ check.dependsOn jacocoTestReport
 
 checkstyle {
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    ignoreFailures = true
     toolVersion = '8.5'
+}
+
+pmd {
+    consoleOutput = true
+    ignoreFailures = true
+    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
+    ruleSets = []
+    toolVersion = '6.1.0'
 }

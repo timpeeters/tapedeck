@@ -73,7 +73,7 @@ public class MediaType implements Serializable {
     public Charset getCharset() {
         String charset = getParameter(PARAM_CHARSET);
 
-        return charset != null ? Charset.forName(charset) : null;
+        return charset == null ? null : Charset.forName(charset);
     }
 
     @Override

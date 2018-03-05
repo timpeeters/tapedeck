@@ -2,6 +2,7 @@ package io.tapedeck;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,7 @@ public class Response {
         }
 
         public Builder body(byte[] body) {
-            this.body = body;
+            this.body = Arrays.copyOf(body, body.length);
 
             return this;
         }

@@ -1,6 +1,6 @@
 package io.tapedeck.util;
 
-public abstract class StringUtils {
+public class StringUtils {
     private StringUtils() {
     }
 
