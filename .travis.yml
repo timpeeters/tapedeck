@@ -1,11 +1,15 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=c636733c7ce6db1c3400cdb608c3c5d991db71474a5c7c04dd117ac28752f3d5
+    - CODACY_PROJECT_TOKEN=d3004e3369f845cbbfcd621d46e14d70
 
 language: java
 
 jdk:
   - oraclejdk8
+
+before_install:
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -16,12 +20,5 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
-after_script:
-  - mv "build/reports/jacoco/test/jacocoTestReport.xml" "src/main/java/jacoco.xml"
-  - cd src/main/java/
-  - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
+after_success:
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
