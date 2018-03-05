@@ -22,4 +22,6 @@ before_script:
   - ./cc-test-reporter before-build
 
 after_script:
-  - ./cc-test-reporter after-build -d --coverage-input-type jacoco --exit-code $TRAVIS_TEST_RESULT
+  - mv "build/reports/jacoco/test/jacocoTestReport.xml" "src/main/java/jacoco.xml"
+  - cd src/main/java/
+  - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
