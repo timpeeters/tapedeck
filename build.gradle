@@ -28,7 +28,7 @@ jacocoTestReport {
 check.dependsOn jacocoTestReport
 
 checkstyle {
-    configFile = rootProject.file('checkstyle.xml')
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
     ignoreFailures = true
     toolVersion = '8.5'
 }
@@ -36,7 +36,7 @@ checkstyle {
 pmd {
     consoleOutput = true
     ignoreFailures = true
-    ruleSetFiles = rootProject.files('ruleset.xml')
+    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
     ruleSets = []
     toolVersion = '6.1.0'
 }
