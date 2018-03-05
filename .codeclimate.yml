@@ -3,3 +3,5 @@ plugins:
     enabled: true
     config:
       file: "config/checkstyle/checkstyle.xml"
+  pmd:
+    enabled: true
