@@ -3,6 +3,9 @@ package io.tapedeck;
 import java.util.function.Predicate;
 
 public class RequestPredicates {
+    private RequestPredicates() {
+    }
+
     public static Predicate<Recording> requestMethod(Request request) {
         return rec -> rec.getRequest().getMethod().equals(request.getMethod());
     }
