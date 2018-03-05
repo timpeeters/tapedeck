@@ -11,12 +11,14 @@ import java.util.function.Consumer;
 public class Request {
     private final RequestMethod method;
     private final URI uri;
+    private final Map<String, String> queryParams;
     private final Map<String, String> headers;
     private final byte[] body;
 
     private Request(Builder builder) {
         this.method = builder.method;
         this.uri = builder.uri;
+        this.queryParams = builder.queryParams;
         this.headers = builder.headers;
         this.body = builder.body;
     }
@@ -27,6 +29,10 @@ public class Request {
 
     public URI getUri() {
         return uri;
+    }
+
+    public Map<String, String> getQueryParams() {
+        return queryParams;
     }
 
     public Map<String, String> getHeaders() {
@@ -64,6 +70,7 @@ public class Request {
     public static class Builder {
         private RequestMethod method;
         private URI uri;
+        private final Map<String, String> queryParams = new LinkedHashMap<>();
         private final Map<String, String> headers = new LinkedHashMap<>();
         private byte[] body;
 
@@ -75,6 +82,12 @@ public class Request {
 
         public Builder uri(URI uri) {
             this.uri = uri;
+
+            return this;
+        }
+
+        public Builder queryParam(String key, String value) {
+            queryParams.put(key, value);
 
             return this;
         }

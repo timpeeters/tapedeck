@@ -15,6 +15,10 @@ public final class RequestPredicates {
         return rec -> rec.getRequest().getUri().equals(request.getUri());
     }
 
+    public static Predicate<Recording> queryParams(Request request) {
+        return rec -> rec.getRequest().getQueryParams().equals(request.getQueryParams());
+    }
+
     public static Predicate<Recording> headers(Request request) {
         return rec -> rec.getRequest().getHeaders().equals(request.getHeaders());
     }

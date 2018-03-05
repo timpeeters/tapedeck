@@ -51,6 +51,15 @@ public class RecorderTest {
     }
 
     @Test
+    public void noMatchingRecording_queryParam() {
+        recorder.record(Request.get().queryParam("id", "1").build(),
+                Response.ok().build());
+
+        assertThatThrownBy(() -> recorder.replay(Request.get().queryParam("id", "2").build()))
+                .isInstanceOf(NoMatchingRecordingFound.class);
+    }
+
+    @Test
     public void noMatchingRecording_differentRequestBody() {
         recorder.record(
                 Request.post().body("hello").build(),
