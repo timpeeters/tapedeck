@@ -5,3 +5,7 @@ plugins:
       file: "config/checkstyle/checkstyle.xml"
   pmd:
     enabled: true
+  sonar-java:
+    enabled: true
+    config:
+      sonar.java.source: 8
