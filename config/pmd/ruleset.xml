@@ -33,8 +33,16 @@
         <exclude name="LoosePackageCoupling"/>
     </rule>
 
-    <!--rule ref="category/java/errorprone.xml"/>
-    <rule ref="category/java/multithreading.xml"/>
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
+        <exclude name="BeanMembersShouldSerialize"/>
+    </rule>
+
+    <rule ref="category/java/multithreading.xml">
+        <exclude name="UseConcurrentHashMap"/>
+    </rule>
+
     <rule ref="category/java/performance.xml"/>
-    <rule ref="category/java/security.xml"/-->
+
+    <rule ref="category/java/security.xml"/>
 </ruleset>
