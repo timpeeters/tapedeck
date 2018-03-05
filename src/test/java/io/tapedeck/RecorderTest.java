@@ -14,7 +14,7 @@ public class RecorderTest {
     private Recorder recorder;
 
     @Before
-    public void setup() {
+    public void initialize() {
         recorder = new Recorder();
     }
 
