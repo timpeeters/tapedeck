@@ -1,5 +1,6 @@
 package io.tapedeck;
 
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 public final class RequestPredicates {
@@ -16,5 +17,9 @@ public final class RequestPredicates {
 
     public static Predicate<Recording> headers(Request request) {
         return rec -> rec.getRequest().getHeaders().equals(request.getHeaders());
+    }
+
+    public static Predicate<Recording> body(Request request) {
+        return rec -> Arrays.equals(rec.getRequest().getBody(), request.getBody());
     }
 }

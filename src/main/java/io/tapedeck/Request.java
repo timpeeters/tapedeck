@@ -2,6 +2,7 @@ package io.tapedeck;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -10,11 +11,13 @@ public class Request {
     private final RequestMethod method;
     private final URI uri;
     private final Map<String, String> headers;
+    private final byte[] body;
 
     private Request(Builder builder) {
         this.method = builder.method;
         this.uri = builder.uri;
         this.headers = builder.headers;
+        this.body = builder.body;
     }
 
     public RequestMethod getMethod() {
@@ -27,6 +30,10 @@ public class Request {
 
     public Map<String, String> getHeaders() {
         return headers;
+    }
+
+    public byte[] getBody() {
+        return body;
     }
 
     public static Builder builder() {
@@ -46,13 +53,18 @@ public class Request {
     }
 
     public static Builder post() {
-        return new Builder().method(RequestMethod.POST);
+        try {
+            return new Builder().method(RequestMethod.POST).uri(new URI(""));
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
     }
 
     public static class Builder {
         private RequestMethod method;
         private URI uri;
         private final Map<String, String> headers = new LinkedHashMap<>();
+        private byte[] body;
 
         public Builder method(RequestMethod method) {
             this.method = method;
@@ -68,6 +80,12 @@ public class Request {
 
         public Builder header(String key, String value) {
             headers.put(key, value);
+
+            return this;
+        }
+
+        public Builder body(String body) {
+            this.body = body.getBytes(Charset.forName("UTF-8"));
 
             return this;
         }

@@ -51,6 +51,16 @@ public class RecorderTest {
     }
 
     @Test
+    public void noMatchingRecording_differentRequestBody() {
+        recorder.record(
+                Request.post().body("hello").build(),
+                Response.ok().build());
+
+        assertThatThrownBy(() -> recorder.replay(Request.post().body("world").build()))
+                .isInstanceOf(NoMatchingRecordingFound.class);
+    }
+
+    @Test
     public void replay_statusCode() {
         recorder.record(Request.get().build(), Response.builder().statusCode(OK_200).build());
 

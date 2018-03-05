@@ -14,7 +14,8 @@ public class Recorder {
         return recordings.stream()
                 .filter(RequestPredicates.requestMethod(request)
                         .and(RequestPredicates.uri(request))
-                        .and(RequestPredicates.headers(request)))
+                        .and(RequestPredicates.headers(request))
+                        .and(RequestPredicates.body(request)))
                 .findFirst().orElseThrow(NoMatchingRecordingFound::new).getResponse();
     }
 }
