@@ -28,8 +28,10 @@
         <exclude name="ShortVariable"/>
     </rule>
 
-    <!--rule ref="category/java/design.xml"/>
-    <rule ref="category/java/errorprone.xml"/>
+    <rule ref="category/java/design.xml">
+    </rule>
+
+    <!--rule ref="category/java/errorprone.xml"/>
     <rule ref="category/java/multithreading.xml"/>
     <rule ref="category/java/performance.xml"/>
     <rule ref="category/java/security.xml"/-->
