@@ -34,7 +34,7 @@ public class Request {
     }
 
     public byte[] getBody() {
-        return Arrays.copyOf(body, body.length);
+        return body == null ? null : Arrays.copyOf(body, body.length);
     }
 
     public static Builder builder() {
