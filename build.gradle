@@ -21,7 +21,6 @@ defaultTasks 'build'
 jacocoTestReport {
     reports {
         xml.enabled = true
-        xml.destination file("${buildDir}/jacoco.xml")
     }
 }
 
