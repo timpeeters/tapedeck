@@ -3,6 +3,7 @@ package io.tapedeck;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -33,7 +34,7 @@ public class Request {
     }
 
     public byte[] getBody() {
-        return body;
+        return Arrays.copyOf(body, body.length);
     }
 
     public static Builder builder() {
@@ -84,12 +85,6 @@ public class Request {
             return this;
         }
 
-        public Builder body(String body) {
-            this.body = body.getBytes(Charset.forName("UTF-8"));
-
-            return this;
-        }
-
         public Builder header(Consumer<HeaderBuilder> consumer) {
             HeaderBuilder builder = new HeaderBuilder();
 
@@ -98,6 +93,12 @@ public class Request {
             Header header = builder.build();
 
             headers.put(header.getName(), header.getValue());
+
+            return this;
+        }
+
+        public Builder body(String body) {
+            this.body = body.getBytes(Charset.forName("UTF-8"));
 
             return this;
         }
