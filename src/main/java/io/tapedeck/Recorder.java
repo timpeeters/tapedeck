@@ -1,10 +1,17 @@
 package io.tapedeck;
 
+import io.tapedeck.matcher.RequestMatcher;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Recorder {
     private final List<Recording> recordings = new ArrayList<>();
+    private final RequestMatcher matcher;
+
+    public Recorder(RequestMatcher matcher) {
+        this.matcher = matcher;
+    }
 
     public void record(Request request, Response response) {
         recordings.add(new Recording(request, response));
@@ -12,11 +19,9 @@ public class Recorder {
 
     public Response replay(Request request) {
         return recordings.stream()
-                .filter(RequestPredicates.requestMethod(request)
-                        .and(RequestPredicates.uri(request))
-                        .and(RequestPredicates.queryParams(request))
-                        .and(RequestPredicates.headers(request))
-                        .and(RequestPredicates.body(request)))
-                .findFirst().orElseThrow(NoMatchingRecordingFound::new).getResponse();
+                .filter(rec -> matcher.matches(rec.getRequest(), request))
+                .findFirst()
+                .orElseThrow(NoMatchingRecordingFound::new)
+                .getResponse();
     }
 }

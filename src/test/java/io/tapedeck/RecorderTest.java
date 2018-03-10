@@ -1,5 +1,6 @@
 package io.tapedeck;
 
+import io.tapedeck.matcher.RequestMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class RecorderTest {
 
     @Before
     public void initialize() {
-        recorder = new Recorder();
+        recorder = new Recorder(RequestMatchers.DEFAULT);
     }
 
     @Test
