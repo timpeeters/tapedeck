@@ -19,10 +19,6 @@ public class Header {
         return name;
     }
 
-    public String getValue() {
-        return values.get(0);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
