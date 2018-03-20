@@ -12,7 +12,7 @@ public class Request {
     private final RequestMethod method;
     private final URI uri;
     private final Map<String, String> queryParams;
-    private final Map<String, String> headers;
+    private final Map<String, Header> headers;
     private final byte[] body;
 
     private Request(Builder builder) {
@@ -35,7 +35,7 @@ public class Request {
         return queryParams;
     }
 
-    public Map<String, String> getHeaders() {
+    public Map<String, Header> getHeaders() {
         return headers;
     }
 
@@ -75,7 +75,7 @@ public class Request {
         private RequestMethod method;
         private URI uri;
         private final Map<String, String> queryParams = new LinkedHashMap<>();
-        private final Map<String, String> headers = new LinkedHashMap<>();
+        private final Map<String, Header> headers = new LinkedHashMap<>();
         private byte[] body;
 
         public Builder method(RequestMethod method) {
@@ -96,20 +96,20 @@ public class Request {
             return this;
         }
 
-        public Builder header(String key, String value) {
-            headers.put(key, value);
+        public Builder header(String name, String value) {
+            headers.put(name, Header.builder().withName(name).withValue(value).build());
 
             return this;
         }
 
-        public Builder header(Consumer<HeaderBuilder> consumer) {
-            HeaderBuilder builder = new HeaderBuilder();
+        public Builder header(Consumer<Header.Builder> consumer) {
+            Header.Builder builder = Header.builder();
 
             consumer.accept(builder);
 
             Header header = builder.build();
 
-            headers.put(header.getName(), header.getValue());
+            headers.put(header.getName(), header);
 
             return this;
         }
@@ -122,45 +122,6 @@ public class Request {
 
         public Request build() {
             return new Request(this);
-        }
-    }
-
-    public static class Header {
-        private final String name;
-        private final String value;
-
-        private Header(HeaderBuilder builder) {
-            this.name = builder.name;
-            this.value = builder.value;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-
-    public static class HeaderBuilder {
-        private String name;
-        private String value;
-
-        public HeaderBuilder withName(String name) {
-            this.name = name;
-
-            return this;
-        }
-
-        public HeaderBuilder withValue(String value) {
-            this.value = value;
-
-            return this;
-        }
-
-        public Header build() {
-            return new Header(this);
         }
     }
 }
