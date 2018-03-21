@@ -31,9 +31,20 @@ targetCompatibility = 1.8
 
 defaultTasks 'build'
 
+jacoco {
+    applyTo junitPlatformTest
+    toolVersion = '0.8.0'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true
+    }
+}
+
+junitPlatformTest {
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/test.exec")
     }
 }
 
