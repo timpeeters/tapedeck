@@ -1,10 +1,11 @@
 package io.tapedeck;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.charset.Charset;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MediaTypeTest {
     @Test
@@ -12,14 +13,14 @@ public class MediaTypeTest {
         assertThat(new MediaType("text", "plain").toString()).isEqualTo("text/plain");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void parse_null() {
-        MediaType.parse(null);
+        assertThatThrownBy(() -> MediaType.parse(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void parse_emptyString() {
-        MediaType.parse("");
+        assertThatThrownBy(() -> MediaType.parse("")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

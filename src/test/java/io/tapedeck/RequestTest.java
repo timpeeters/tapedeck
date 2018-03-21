@@ -1,15 +1,17 @@
 package io.tapedeck;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RequestTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void get_invalidUri() {
-        Request.get(" ");
+        assertThatThrownBy(() -> Request.get(" ")).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void post_invalidUri() {
-        Request.post(" ");
+        assertThatThrownBy(() -> Request.post(" ")).isInstanceOf(IllegalArgumentException.class);
     }
 }

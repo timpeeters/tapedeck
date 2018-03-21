@@ -1,8 +1,8 @@
 package io.tapedeck;
 
 import io.tapedeck.matcher.RequestMatchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.charset.Charset;
 
@@ -14,7 +14,7 @@ public class RecorderTest {
 
     private Recorder recorder;
 
-    @Before
+    @BeforeEach
     public void initialize() {
         recorder = new Recorder(RequestMatchers.DEFAULT);
     }

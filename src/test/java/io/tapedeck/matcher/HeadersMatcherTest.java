@@ -2,8 +2,8 @@ package io.tapedeck.matcher;
 
 import io.tapedeck.Headers;
 import io.tapedeck.Request;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +13,7 @@ public class HeadersMatcherTest {
 
     private HeadersMatcher matcher;
 
-    @Before
+    @BeforeEach
     public void initialize() {
         matcher = new HeadersMatcher();
     }
