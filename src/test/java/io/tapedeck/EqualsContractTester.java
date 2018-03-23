@@ -8,47 +8,49 @@ public interface EqualsContractTester<T> {
     T getInstance();
 
     /**
-     * For any non-null reference value a, a.equals(a) should return true.
+     * Equals method should be reflexive: x.equals(x) = true.
      */
     @Test
     default void equalsIsReflexive() {
-        T a = getInstance();
+        T x = getInstance();
 
-        assertThat(a.equals(a)).isTrue().as("equals method should be reflexive");
+        assertThat(x).isEqualTo(x)
+                .as("equals method should be reflexive");
     }
 
     /**
-     * For any non-null reference values a and b, a.equals(b) should return true if and only if b.equals(a) returns
-     * true.
+     * Equals method should be symmetric: x.equals(y) = y.equals(x).
      */
     @Test
     default void equalsIsSymmetric() {
-        T a = getInstance();
-        T b = getInstance();
+        T x = getInstance();
+        T y = getInstance();
 
-        assertThat(a.equals(b) && b.equals(a)).isTrue().as("equals method should be symmetric");
+        assertThat(x.equals(y) && y.equals(x)).isTrue()
+                .as("equals method should be symmetric");
     }
 
     /**
-     * For any non-null reference values a, b, and c, if a.equals(b) returns true and b.equals(c) returns true, then
-     * a.equals(c) should return true.
+     * Equals method should be transitive: x.equals(y) = y.equals(z) = true -> x.equals(z) = true.
      */
     @Test
     default void equalsIsTransitive() {
-        T a = getInstance();
-        T b = getInstance();
-        T c = getInstance();
+        T x = getInstance();
+        T y = getInstance();
+        T z = getInstance();
 
-        assertThat(a.equals(b) && b.equals(c) && a.equals(c)).isTrue().as("equals method should be transitive");
+        assertThat(x.equals(y) && y.equals(z) && x.equals(z)).isTrue()
+                .as("equals method should be transitive");
     }
 
     /**
-     * Tests whether equals holds up against null.
+     * Equals method should return false when comparing to null.
      */
     @Test
     default void equalsAgainstNull() {
-        T a = getInstance();
+        T x = getInstance();
 
-        assertThat(a).isNotEqualTo(null).as("a should not be equal to null");
+        assertThat(x).isNotEqualTo(null)
+                .as("equals method should return false when comparing to null");
     }
 }

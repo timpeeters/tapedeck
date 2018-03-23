@@ -8,21 +8,25 @@ public interface HashCodeContractTester<T> {
     T getInstance();
 
     /**
-     * Whenever hashCode is invoked on the same object more than once during an execution of a Java application, the
-     * hashCode method must consistently return the same value.
+     * HashCode method should be consistent: x.hashCode() == x.hashCode().
      */
     @Test
     default void hashCodeConsistency() {
-        T a = getInstance();
+        T x = getInstance();
 
-        assertThat(a.hashCode()).isEqualTo(a.hashCode()).as("hashCode should be consistent");
+        assertThat(x.hashCode()).isEqualTo(x.hashCode())
+                .as("hashCode method should be consistent");
     }
 
+    /**
+     * HashCode method should return equal value for equal objects: x.equals(y) -> x.hashCode() == y.hashCode().
+     */
     @Test
     default void hashCodeEquality() {
-        T a = getInstance();
-        T b = getInstance();
+        T x = getInstance();
+        T y = getInstance();
 
-        assertThat(a.hashCode()).isEqualTo(b.hashCode()).as("hashCode should be equal");
+        assertThat(x.hashCode()).isEqualTo(y.hashCode())
+                .as("hashCode method should return equal value for equal objects");
     }
 }
