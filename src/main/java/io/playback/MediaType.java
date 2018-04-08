@@ -1,13 +1,10 @@
 package io.playback;
 
-import io.playback.util.StringUtils;
-
 import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class MediaType implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,33 +26,7 @@ public class MediaType implements Serializable {
     }
 
     public static MediaType parse(String mediaType) {
-        if (StringUtils.isEmpty(mediaType)) {
-            throw new IllegalArgumentException("'mediatype' must not be empty");
-        }
-
-        String fullType = parseFullType(mediaType);
-        String type = fullType.split("/")[0];
-        String subtype = fullType.split("/")[1];
-
-        return new MediaType(type, subtype, parseParameters(mediaType));
-    }
-
-    private static String parseFullType(String mediaType) {
-        String fullType = mediaType.split(";")[0].trim();
-
-        if ("*".equals(fullType)) {
-            return "*/*";
-        }
-
-        return fullType;
-    }
-
-    private static Map<String, String> parseParameters(String mediaType) {
-        return Arrays.stream(mediaType.split(";"))
-                .skip(1)
-                .filter(p -> p.contains("="))
-                .map(p -> p.split("="))
-                .collect(Collectors.toMap(p -> p[0].trim(), p -> p[1].trim()));
+        return MediaTypeParser.parse(mediaType);
     }
 
     public String getType() {
@@ -74,6 +45,24 @@ public class MediaType implements Serializable {
         String charset = getParameter(PARAM_CHARSET);
 
         return charset == null ? null : Charset.forName(charset);
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (!(otherObject instanceof MediaType)) {
+            return false;
+        }
+
+        MediaType otherMediaType = (MediaType) otherObject;
+
+        return Objects.equals(type, otherMediaType.type) &&
+                Objects.equals(subtype, otherMediaType.subtype) &&
+                Objects.equals(parameters, otherMediaType.parameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, subtype, parameters);
     }
 
     @Override
