@@ -1,6 +1,6 @@
 env:
   global:
-    - CODACY_PROJECT_TOKEN=d3004e3369f845cbbfcd621d46e14d70
+    - CODACY_PROJECT_TOKEN=2a1b0fd13a6145578b37d959159eb194
 
 language: java
 
