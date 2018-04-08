@@ -33,7 +33,7 @@ defaultTasks 'build'
 
 jacoco {
     applyTo junitPlatformTest
-    toolVersion = '0.8.0'
+    toolVersion = '0.8.1'
 }
 
 jacocoTestReport {
@@ -53,7 +53,7 @@ check.dependsOn jacocoTestReport
 checkstyle {
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
     ignoreFailures = true
-    toolVersion = '8.5'
+    toolVersion = '8.9'
 }
 
 pmd {
@@ -61,5 +61,5 @@ pmd {
     ignoreFailures = true
     ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
     ruleSets = []
-    toolVersion = '6.1.0'
+    toolVersion = '6.2.0'
 }
