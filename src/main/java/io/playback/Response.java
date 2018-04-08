@@ -53,8 +53,18 @@ public class Response {
     public static class Builder {
         private String statusCode;
         private String statusText;
-        private final Map<String, List<String>> headers = new HashMap<>();
+        private Map<String, List<String>> headers = new HashMap<>();
         private byte[] body;
+
+
+        public Builder like(Response response) {
+            this.statusCode = response.statusCode;
+            this.statusText = response.statusText;
+            this.headers = response.headers;
+            this.body = response.body;
+
+            return this;
+        }
 
         public Builder statusCode(String statusCode) {
             this.statusCode = statusCode;
