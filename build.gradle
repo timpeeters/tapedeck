@@ -14,52 +14,50 @@ plugins {
     id "pmd"
 }
 
-apply plugin: 'org.junit.platform.gradle.plugin'
-
-repositories {
-    jcenter()
-}
-
-dependencies {
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
-    testCompile("org.assertj:assertj-core:3.9.1")
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 defaultTasks 'build'
 
-jacoco {
-    applyTo junitPlatformTest
-    toolVersion = '0.8.1'
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled = true
+allprojects {
+    repositories {
+        jcenter()
     }
 }
 
-junitPlatformTest {
+subprojects {
+    apply plugin: 'org.junit.platform.gradle.plugin'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
     jacoco {
-        destinationFile = file("${buildDir}/jacoco/test.exec")
+        applyTo junitPlatformTest
+        toolVersion = '0.8.1'
     }
-}
 
-check.dependsOn jacocoTestReport
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+        }
+    }
 
-checkstyle {
-    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
-    ignoreFailures = true
-    toolVersion = '8.9'
-}
+    junitPlatformTest {
+        jacoco {
+            destinationFile = file("${buildDir}/jacoco/test.exec")
+        }
+    }
 
-pmd {
-    consoleOutput = true
-    ignoreFailures = true
-    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
-    ruleSets = []
-    toolVersion = '6.2.0'
+    check.dependsOn jacocoTestReport
+
+    checkstyle {
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+        ignoreFailures = true
+        toolVersion = '8.9'
+    }
+
+    pmd {
+        consoleOutput = true
+        ignoreFailures = true
+        ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
+        ruleSets = []
+        toolVersion = '6.2.0'
+    }
 }
