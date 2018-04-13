@@ -27,7 +27,7 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    build.dependsOn jacocoTestReport
+    check.dependsOn jacocoTestReport
 
     checkstyle {
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
