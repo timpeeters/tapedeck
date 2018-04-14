@@ -21,25 +21,16 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'java'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    check.dependsOn jacocoTestReport
 
     checkstyle {
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         ignoreFailures = true
         toolVersion = '8.9'
-    }
-    
-    jacocoTestReport {
-        reports {
-            html.enabled = false
-            xml.enabled = true
-        }
     }
 
     pmd {
@@ -54,3 +45,30 @@ subprojects {
         useJUnitPlatform()
     }
 }
+
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    dependsOn = subprojects.build
+
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
+
+    onlyIf = {
+        true
+    }
+
+    reports {
+        html.enabled = false
+        xml.enabled = true
+        csv.enabled = false
+    }
+}
+
+rootProject.check.dependsOn jacocoRootReport
