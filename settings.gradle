@@ -1,3 +1,4 @@
 rootProject.name='playback.io'
 
 include 'playback-core'
+include 'playback-servlet'
