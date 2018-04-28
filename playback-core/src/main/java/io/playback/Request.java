@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 public class Request {
     private final RequestMethod method;
     private final URI uri;
-    private final Map<String, String> queryParams;
+    private final Map<String, String[]> queryParams;
     private final Map<String, Header> headers;
     private final byte[] body;
 
@@ -31,7 +31,7 @@ public class Request {
         return uri;
     }
 
-    public Map<String, String> getQueryParams() {
+    public Map<String, String[]> getQueryParams() {
         return queryParams;
     }
 
@@ -74,7 +74,7 @@ public class Request {
     public static class Builder {
         private RequestMethod method;
         private URI uri;
-        private final Map<String, String> queryParams = new LinkedHashMap<>();
+        private final Map<String, String[]> queryParams = new LinkedHashMap<>();
         private final Map<String, Header> headers = new LinkedHashMap<>();
         private byte[] body;
 
@@ -90,8 +90,14 @@ public class Request {
             return this;
         }
 
-        public Builder queryParam(String key, String value) {
-            queryParams.put(key, value);
+        public Builder queryParam(String key, String... values) {
+            queryParams.put(key, values);
+
+            return this;
+        }
+
+        public Builder queryParams(Map<String, String[]> queryParams) {
+            this.queryParams.putAll(queryParams);
 
             return this;
         }

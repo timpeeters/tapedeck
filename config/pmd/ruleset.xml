@@ -10,6 +10,7 @@
     <rule ref="category/java/bestpractices.xml">
         <exclude name="AccessorClassGeneration"/>
         <exclude name="AccessorMethodGeneration"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
     </rule>
 

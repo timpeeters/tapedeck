@@ -5,17 +5,64 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.net.URI;
+import java.util.AbstractMap.SimpleEntry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RequestMapperTest {
     @Test
     public void map() {
-        MockHttpServletRequest mockRequest = new MockHttpServletRequest("GET", "/");
+        MockHttpServletRequest mockReq = getRoot();
 
-        assertThat(RequestMapper.map(mockRequest)).satisfies(r -> {
+        assertThat(RequestMapper.map(mockReq)).satisfies(r -> {
             assertThat(r.getMethod()).isEqualTo(RequestMethod.GET);
             assertThat(r.getUri()).isEqualTo(URI.create("/"));
         });
+    }
+
+    @Test
+    public void map_emptyQueryParams() {
+        MockHttpServletRequest mockReq = getRoot();
+
+        assertThat(RequestMapper.map(mockReq).getQueryParams()).isEmpty();
+    }
+
+    @Test
+    public void map_oneQueryParam() {
+        MockHttpServletRequest mockReq = getRoot();
+        mockReq.setQueryString("id=1");
+
+        assertThat(RequestMapper.map(mockReq).getQueryParams())
+                .isNotEmpty()
+                .hasSize(1)
+                .containsExactly(new SimpleEntry<>("id", new String[]{"1"}));
+    }
+
+    @Test
+    public void map_oneQueryParam_multipleValues() {
+        MockHttpServletRequest mockReq = getRoot();
+        mockReq.setQueryString("id=1&id=2");
+
+        assertThat(RequestMapper.map(mockReq).getQueryParams())
+                .isNotEmpty()
+                .hasSize(1)
+                .containsExactly(new SimpleEntry<>("id", new String[]{"1", "2"}));
+    }
+
+    @Test
+    public void map_multipleQueryParams() {
+        MockHttpServletRequest mockReq = getRoot();
+        mockReq.setQueryString("q=test&page=1");
+
+        assertThat(RequestMapper.map(mockReq).getQueryParams())
+                .isNotEmpty()
+                .hasSize(2)
+                .containsExactly(
+                        new SimpleEntry<>("q", new String[]{"test"}),
+                        new SimpleEntry<>("page", new String[]{"1"}));
+    }
+
+    private MockHttpServletRequest getRoot() {
+        return new MockHttpServletRequest("GET", "/");
     }
 }
