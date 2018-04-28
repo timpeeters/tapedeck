@@ -21,8 +21,17 @@ public class RequestMapperTest {
     }
 
     @Test
-    public void map_emptyQueryParams() {
+    public void map_nullQueryParam() {
         MockHttpServletRequest mockReq = getRoot();
+        mockReq.setQueryString(null);
+
+        assertThat(RequestMapper.map(mockReq).getQueryParams()).isEmpty();
+    }
+
+    @Test
+    public void map_emptyQueryParam() {
+        MockHttpServletRequest mockReq = getRoot();
+        mockReq.setQueryString("");
 
         assertThat(RequestMapper.map(mockReq).getQueryParams()).isEmpty();
     }

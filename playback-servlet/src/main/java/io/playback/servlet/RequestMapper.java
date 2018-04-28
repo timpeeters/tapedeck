@@ -25,7 +25,7 @@ final class RequestMapper {
     }
 
     private static Map<String, String[]> mapQueryParams(HttpServletRequest req) {
-        if (req.getQueryString() == null) {
+        if (req.getQueryString() == null || req.getQueryString().isEmpty()) {
             return Collections.emptyMap();
         }
 
