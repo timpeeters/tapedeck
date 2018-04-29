@@ -71,6 +71,17 @@ public class RequestMapperTest {
                         new SimpleEntry<>("page", new String[]{"1"}));
     }
 
+    @Test
+    public void map_queryParamContainingUrlEncodedCharacters() {
+        MockHttpServletRequest mockReq = getRoot();
+        mockReq.setQueryString("dir%20name=%2Fhome");
+
+        assertThat(RequestMapper.map(mockReq).getQueryParams())
+                .isNotEmpty()
+                .hasSize(1)
+                .containsExactly(new SimpleEntry<>("dir name", new String[] {"/home"}));
+    }
+
     private MockHttpServletRequest getRoot() {
         return new MockHttpServletRequest("GET", "/");
     }
