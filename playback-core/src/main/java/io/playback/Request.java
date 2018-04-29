@@ -123,7 +123,7 @@ public class Request {
         }
 
         public Builder headers(Header... headers) {
-           Arrays.stream(headers).forEach(h -> this.headers.put(h.getName(), h));
+            Arrays.stream(headers).forEach(h -> this.headers.put(h.getName(), h));
 
             return this;
         }

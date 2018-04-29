@@ -15,16 +15,16 @@ public class RequestMapperTest {
     public void map() {
         assertThat(RequestMapper.map(MockHttpServletRequestBuilder.get("/")
                 .queryString("q=test")
-                .header(Headers.CONTENT_TYPE, "application/json")
-                .build())).satisfies(r -> {
-
-            assertThat(r.getMethod()).isEqualTo(RequestMethod.GET);
-            assertThat(r.getUri()).isEqualTo(URI.create("/"));
-            assertThat(r.getQueryParams()).containsValue(QueryParam.queryParam("q", "test"));
-            assertThat(r.getHeaders()).containsValue(Header.builder()
-                    .withName(Headers.CONTENT_TYPE)
-                    .withValue("application/json")
-                    .build());
-        });
+                .header(Headers.ACCEPT, "application/json")
+                .build()))
+                .satisfies(r -> {
+                    assertThat(r.getMethod()).isEqualTo(RequestMethod.GET);
+                    assertThat(r.getUri()).isEqualTo(URI.create("/"));
+                    assertThat(r.getQueryParams()).containsValue(QueryParam.queryParam("q", "test"));
+                    assertThat(r.getHeaders()).containsValue(Header.builder()
+                            .withName(Headers.ACCEPT)
+                            .withValue("application/json")
+                            .build());
+                });
     }
 }
