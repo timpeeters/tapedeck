@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,8 @@ public class Request {
     private Request(Builder builder) {
         this.method = builder.method;
         this.uri = builder.uri;
-        this.queryParams = builder.queryParams;
-        this.headers = builder.headers;
+        this.queryParams = Collections.unmodifiableMap(builder.queryParams);
+        this.headers = Collections.unmodifiableMap(builder.headers);
         this.body = builder.body;
     }
 

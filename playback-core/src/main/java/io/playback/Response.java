@@ -3,6 +3,7 @@ package io.playback;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Response {
     private Response(Builder builder) {
         this.statusCode = builder.statusCode;
         this.statusText = builder.statusText;
-        this.headers = builder.headers;
+        this.headers = Collections.unmodifiableMap(builder.headers);
         this.body = builder.body;
     }
 

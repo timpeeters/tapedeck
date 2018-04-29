@@ -22,7 +22,7 @@ public class MediaType implements Serializable {
     public MediaType(String type, String subtype, Map<String, String> parameters) {
         this.type = type;
         this.subtype = subtype;
-        this.parameters = parameters;
+        this.parameters = Collections.unmodifiableMap(parameters);
     }
 
     public static MediaType parse(String mediaType) {

@@ -17,14 +17,14 @@ public final class QueryStringParser {
 
     public static List<QueryParam> parse(String queryString) {
         if (queryString == null || queryString.isEmpty()) {
-            return Collections.emptyList();
+            return Collections.unmodifiableList(Collections.emptyList());
         }
 
-        return Arrays.stream(queryString.split("&"))
+        return Collections.unmodifiableList(Arrays.stream(queryString.split("&"))
                 .map(mapQueryParam())
                 .collect(Collectors.collectingAndThen(
                         Collectors.toMap(QueryParam::getName, Function.identity(), mergeQueryParams()),
-                        m -> new ArrayList<>(m.values())));
+                        m -> new ArrayList<>(m.values()))));
     }
 
     private static Function<String, QueryParam> mapQueryParam() {

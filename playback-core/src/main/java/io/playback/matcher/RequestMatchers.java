@@ -3,6 +3,7 @@ package io.playback.matcher;
 import io.playback.Request;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class RequestMatchers implements RequestMatcher {
@@ -11,7 +12,7 @@ public final class RequestMatchers implements RequestMatcher {
     private final List<RequestMatcher> matchers;
 
     private RequestMatchers(List<RequestMatcher> matchers) {
-        this.matchers = matchers;
+        this.matchers = Collections.unmodifiableList(matchers);
     }
 
     public static RequestMatcher of(RequestMatcher... matchers) {
