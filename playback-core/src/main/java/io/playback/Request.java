@@ -5,13 +5,14 @@ import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class Request {
     private final RequestMethod method;
     private final URI uri;
-    private final Map<String, String[]> queryParams;
+    private final Map<String, QueryParam> queryParams;
     private final Map<String, Header> headers;
     private final byte[] body;
 
@@ -31,7 +32,7 @@ public class Request {
         return uri;
     }
 
-    public Map<String, String[]> getQueryParams() {
+    public Map<String, QueryParam> getQueryParams() {
         return queryParams;
     }
 
@@ -74,7 +75,7 @@ public class Request {
     public static class Builder {
         private RequestMethod method;
         private URI uri;
-        private final Map<String, String[]> queryParams = new LinkedHashMap<>();
+        private final Map<String, QueryParam> queryParams = new LinkedHashMap<>();
         private final Map<String, Header> headers = new LinkedHashMap<>();
         private byte[] body;
 
@@ -90,14 +91,14 @@ public class Request {
             return this;
         }
 
-        public Builder queryParam(String key, String... values) {
-            queryParams.put(key, values);
+        public Builder queryParam(String name, String... values) {
+            queryParams.put(name, QueryParam.queryParam(name, values));
 
             return this;
         }
 
-        public Builder queryParams(Map<String, String[]> queryParams) {
-            this.queryParams.putAll(queryParams);
+        public Builder queryParams(List<QueryParam> queryParams) {
+            queryParams.forEach(queryParam -> this.queryParams.put(queryParam.getName(), queryParam));
 
             return this;
         }

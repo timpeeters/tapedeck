@@ -1,11 +1,11 @@
 package io.playback.servlet;
 
+import io.playback.QueryParam;
 import io.playback.RequestMethod;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.net.URI;
-import java.util.AbstractMap.SimpleEntry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,8 +41,8 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
         req.setQueryString("id=1");
 
-        assertThat(RequestMapper.map(req).getQueryParams())
-                .containsExactly(new SimpleEntry<>("id", new String[] {"1"}));
+        assertThat(RequestMapper.map(req).getQueryParams()).containsValue(
+                QueryParam.queryParam("id", "1"));
     }
 
     @Test
@@ -50,8 +50,8 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
         req.setQueryString("id=1&id=2");
 
-        assertThat(RequestMapper.map(req).getQueryParams())
-                .containsExactly(new SimpleEntry<>("id", new String[] {"1", "2"}));
+        assertThat(RequestMapper.map(req).getQueryParams()).containsValue(
+                QueryParam.queryParam("id", "1", "2"));
     }
 
     @Test
@@ -59,10 +59,9 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
         req.setQueryString("q=test&page=1");
 
-        assertThat(RequestMapper.map(req).getQueryParams())
-                .containsExactly(
-                        new SimpleEntry<>("q", new String[] {"test"}),
-                        new SimpleEntry<>("page", new String[] {"1"}));
+        assertThat(RequestMapper.map(req).getQueryParams()).containsValues(
+                QueryParam.queryParam("q", "test"),
+                QueryParam.queryParam("page", "1"));
     }
 
     @Test
@@ -70,8 +69,8 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
         req.setQueryString("dir%20name=%2Fhome");
 
-        assertThat(RequestMapper.map(req).getQueryParams())
-                .containsExactly(new SimpleEntry<>("dir name", new String[] {"/home"}));
+        assertThat(RequestMapper.map(req).getQueryParams()).containsValue(
+                QueryParam.queryParam("dir name", "/home"));
     }
 
     @Test
@@ -79,8 +78,8 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
         req.setQueryString("q=");
 
-        assertThat(RequestMapper.map(req).getQueryParams())
-                .containsExactly(new SimpleEntry<>("q", new String[] {""}));
+        assertThat(RequestMapper.map(req).getQueryParams()).containsValue(
+                QueryParam.empty("q"));
     }
 
     @Test
@@ -88,11 +87,10 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
         req.setQueryString("a&b&c");
 
-        assertThat(RequestMapper.map(req).getQueryParams())
-                .containsExactly(
-                        new SimpleEntry<>("a", new String[] {""}),
-                        new SimpleEntry<>("b", new String[] {""}),
-                        new SimpleEntry<>("c", new String[] {""}));
+        assertThat(RequestMapper.map(req).getQueryParams()).containsValues(
+                QueryParam.empty("a"),
+                QueryParam.empty("b"),
+                QueryParam.empty("c"));
     }
 
     private MockHttpServletRequest getRoot() {

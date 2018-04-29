@@ -1,14 +1,16 @@
 package io.playback.servlet;
 
+import io.playback.QueryParam;
 import io.playback.Request;
 import io.playback.RequestMethod;
 import io.playback.servlet.util.UrlDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -26,26 +28,30 @@ final class RequestMapper {
                 .build();
     }
 
-    private static Map<String, String[]> mapQueryParams(HttpServletRequest req) {
+    private static List<QueryParam> mapQueryParams(HttpServletRequest req) {
         if (req.getQueryString() == null || req.getQueryString().isEmpty()) {
-            return Collections.emptyMap();
+            return Collections.emptyList();
         }
 
         return Arrays.stream(req.getQueryString().split("&"))
-                .map(s -> s.split("="))
-                .collect(Collectors.toMap(queryParamKey(), queryParamValue(), mergeQueryParamValues()));
+                .map(mapQueryParam())
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toMap(QueryParam::getName, Function.identity(), mergeQueryParams()),
+                        m -> new ArrayList<>(m.values())));
     }
 
-    private static Function<String[], String> queryParamKey() {
-        return a -> decode(a[0]);
+    private static Function<String, QueryParam> mapQueryParam() {
+        return s -> {
+            String[] parts = s.split("=");
+            String name = decode(parts[0]);
+
+            return parts.length > 1 ? QueryParam.queryParam(name, decode(parts[1])) : QueryParam.empty(name);
+        };
     }
 
-    private static Function<String[], String[]> queryParamValue() {
-        return a -> a.length > 1 ? new String[] {decode(a[1])} : new String[] {""};
-    }
-
-    private static BinaryOperator<String[]> mergeQueryParamValues() {
-        return (a, b) -> Stream.concat(Arrays.stream(a), Arrays.stream(b)).toArray(String[]::new);
+    private static BinaryOperator<QueryParam> mergeQueryParams() {
+        return (a, b) -> QueryParam.queryParam(a.getName(), Stream.concat(
+                a.getValues().stream(), b.getValues().stream()).toArray(String[]::new));
     }
 
     private static String decode(String value) {

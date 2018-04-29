@@ -30,8 +30,8 @@ public class Response {
         return Charset.forName("UTF-8");
     }
 
-    public List<String> getHeader(String key) {
-        return headers.get(key);
+    public List<String> getHeader(String name) {
+        return headers.get(name);
     }
 
     public String getStatusCode() {
@@ -90,11 +90,11 @@ public class Response {
             return this;
         }
 
-        public Builder header(String key, String value) {
-            List<String> values = headers.getOrDefault(key, new ArrayList<>());
+        public Builder header(String name, String value) {
+            List<String> values = headers.getOrDefault(name, new ArrayList<>());
             values.add(value);
 
-            headers.put(key, values);
+            headers.put(name, values);
 
             return this;
         }
