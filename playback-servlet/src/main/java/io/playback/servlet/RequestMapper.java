@@ -2,11 +2,10 @@ package io.playback.servlet;
 
 import io.playback.Request;
 import io.playback.RequestMethod;
+import io.playback.servlet.util.UrlDecoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
@@ -50,10 +49,6 @@ final class RequestMapper {
     }
 
     private static String decode(String value) {
-        try {
-            return URLDecoder.decode(value, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException("Invalid encoding", e);
-        }
+        return UrlDecoder.decode(value);
     }
 }

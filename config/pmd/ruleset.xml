@@ -22,12 +22,21 @@
 
     <rule ref="category/java/codestyle.xml">
         <exclude name="AtLeastOneConstructor"/>
+        <exclude name="CommentDefaultAccessModifier"/>
+        <exclude name="DefaultPackage"/>
         <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="LongVariable"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="MethodNamingConventions"/>
         <exclude name="OnlyOneReturn"/>
         <exclude name="ShortMethodName"/>
         <exclude name="ShortVariable"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/LongVariable">
+        <properties>
+            <property name="minimum" value="20"/>
+        </properties>
     </rule>
 
     <rule ref="category/java/design.xml">
