@@ -2,6 +2,7 @@ package io.playback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,7 +13,7 @@ public class Header {
 
     private Header(Builder builder) {
         this.name = builder.name;
-        this.values = builder.values;
+        this.values = Collections.unmodifiableList(builder.values);
     }
 
     public String getName() {
