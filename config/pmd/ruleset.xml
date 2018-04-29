@@ -42,7 +42,14 @@
     <rule ref="category/java/design.xml">
         <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
+        <exclude name="SignatureDeclareThrowsException"/>
         <exclude name="TooManyMethods"/>
+    </rule>
+
+    <rule ref="category/java/design.xml/SignatureDeclareThrowsException">
+        <properties>
+            <property name="IgnoreJUnitCompletely" value="true"/>
+        </properties>
     </rule>
 
     <rule ref="category/java/design.xml/TooManyMethods">
