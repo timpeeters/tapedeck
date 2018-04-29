@@ -12,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RequestMapperTest {
     @Test
     public void map() {
-        MockHttpServletRequest mockReq = getRoot();
+        MockHttpServletRequest req = getRoot();
 
-        assertThat(RequestMapper.map(mockReq)).satisfies(r -> {
+        assertThat(RequestMapper.map(req)).satisfies(r -> {
             assertThat(r.getMethod()).isEqualTo(RequestMethod.GET);
             assertThat(r.getUri()).isEqualTo(URI.create("/"));
         });
@@ -22,44 +22,44 @@ public class RequestMapperTest {
 
     @Test
     public void map_nullQueryParam() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString(null);
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString(null);
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams()).isEmpty();
+        assertThat(RequestMapper.map(req).getQueryParams()).isEmpty();
     }
 
     @Test
     public void map_emptyQueryParam() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams()).isEmpty();
+        assertThat(RequestMapper.map(req).getQueryParams()).isEmpty();
     }
 
     @Test
     public void map_oneQueryParam() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("id=1");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("id=1");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams())
+        assertThat(RequestMapper.map(req).getQueryParams())
                 .containsExactly(new SimpleEntry<>("id", new String[] {"1"}));
     }
 
     @Test
     public void map_oneQueryParam_multipleValues() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("id=1&id=2");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("id=1&id=2");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams())
+        assertThat(RequestMapper.map(req).getQueryParams())
                 .containsExactly(new SimpleEntry<>("id", new String[] {"1", "2"}));
     }
 
     @Test
     public void map_multipleQueryParams() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("q=test&page=1");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("q=test&page=1");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams())
+        assertThat(RequestMapper.map(req).getQueryParams())
                 .containsExactly(
                         new SimpleEntry<>("q", new String[] {"test"}),
                         new SimpleEntry<>("page", new String[] {"1"}));
@@ -67,28 +67,28 @@ public class RequestMapperTest {
 
     @Test
     public void map_queryParamContainingUrlEncodedCharacters() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("dir%20name=%2Fhome");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("dir%20name=%2Fhome");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams())
+        assertThat(RequestMapper.map(req).getQueryParams())
                 .containsExactly(new SimpleEntry<>("dir name", new String[] {"/home"}));
     }
 
     @Test
     public void map_queryParamWithEmptyValue() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("q=");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("q=");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams())
+        assertThat(RequestMapper.map(req).getQueryParams())
                 .containsExactly(new SimpleEntry<>("q", new String[] {""}));
     }
 
     @Test
     public void map_queryParamWithoutEqualSign() {
-        MockHttpServletRequest mockReq = getRoot();
-        mockReq.setQueryString("a&b&c");
+        MockHttpServletRequest req = getRoot();
+        req.setQueryString("a&b&c");
 
-        assertThat(RequestMapper.map(mockReq).getQueryParams())
+        assertThat(RequestMapper.map(req).getQueryParams())
                 .containsExactly(
                         new SimpleEntry<>("a", new String[] {""}),
                         new SimpleEntry<>("b", new String[] {""}),
