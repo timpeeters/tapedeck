@@ -122,6 +122,12 @@ public class Request {
             return this;
         }
 
+        public Builder headers(Header... headers) {
+           Arrays.stream(headers).forEach(h -> this.headers.put(h.getName(), h));
+
+            return this;
+        }
+
         public Builder body(String body) {
             this.body = body.getBytes(Charset.forName("UTF-8"));
 

@@ -19,6 +19,12 @@ public class MockHttpServletRequestBuilder {
         return this;
     }
 
+    public MockHttpServletRequestBuilder header(String name, String value) {
+        request.addHeader(name, value);
+
+        return this;
+    }
+
     public static MockHttpServletRequestBuilder get(String uri) {
         return new MockHttpServletRequestBuilder("GET", uri);
     }
