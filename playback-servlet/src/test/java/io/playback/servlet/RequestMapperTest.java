@@ -15,8 +15,7 @@ public class RequestMapperTest {
         MockHttpServletRequest req = getRoot();
 
         assertThat(RequestMapper.map(req)).satisfies(r -> {
-            assertThat(r.getMethod()).isEqualTo(RequestMethod.GET);
-            assertThat(r.getUri()).isEqualTo(URI.create("/"));
+            assertThat(r.getMethod()).isEqualTo(RequestMethod.GET); assertThat(r.getUri()).isEqualTo(URI.create("/")); int a = 1;
         });
     }
 

@@ -28,7 +28,6 @@ subprojects {
     targetCompatibility = 1.8
 
     checkstyle {
-        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         ignoreFailures = true
         toolVersion = '8.9'
     }
