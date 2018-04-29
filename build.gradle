@@ -32,6 +32,10 @@ subprojects {
         toolVersion = '8.9'
     }
 
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-dependencies:2.0.1.RELEASE'
+    }
+
     pmd {
         consoleOutput = true
         ignoreFailures = true
