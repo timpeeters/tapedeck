@@ -41,7 +41,7 @@ final class RequestMapper {
     }
 
     private static Function<String[], String[]> queryParamValue() {
-        return a -> new String[]{decode(a[1])};
+        return a -> new String[] {decode(a[1])};
     }
 
     private static BinaryOperator<String[]> mergeQueryParamValues() {

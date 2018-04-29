@@ -44,7 +44,7 @@ public class RequestMapperTest {
         assertThat(RequestMapper.map(mockReq).getQueryParams())
                 .isNotEmpty()
                 .hasSize(1)
-                .containsExactly(new SimpleEntry<>("id", new String[]{"1"}));
+                .containsExactly(new SimpleEntry<>("id", new String[] {"1"}));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class RequestMapperTest {
         assertThat(RequestMapper.map(mockReq).getQueryParams())
                 .isNotEmpty()
                 .hasSize(1)
-                .containsExactly(new SimpleEntry<>("id", new String[]{"1", "2"}));
+                .containsExactly(new SimpleEntry<>("id", new String[] {"1", "2"}));
     }
 
     @Test
@@ -67,8 +67,8 @@ public class RequestMapperTest {
                 .isNotEmpty()
                 .hasSize(2)
                 .containsExactly(
-                        new SimpleEntry<>("q", new String[]{"test"}),
-                        new SimpleEntry<>("page", new String[]{"1"}));
+                        new SimpleEntry<>("q", new String[] {"test"}),
+                        new SimpleEntry<>("page", new String[] {"1"}));
     }
 
     @Test
