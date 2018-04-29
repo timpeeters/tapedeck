@@ -3,7 +3,7 @@ dependencies {
     compile("javax.servlet:javax.servlet-api:3.1.0")
 
     testCompile("org.assertj:assertj-core:3.9.1")
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.1.1")
+    testCompile("org.junit.jupiter:junit-jupiter-api")
     testCompile("org.springframework:spring-test")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
