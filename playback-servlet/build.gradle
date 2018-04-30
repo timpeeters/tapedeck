@@ -1,7 +1,8 @@
 dependencies {
     compile project(":playback-core")
-    compile("javax.servlet:javax.servlet-api:3.1.0")
+    compileOnly("javax.servlet:javax.servlet-api:3.1.0")
 
+    testCompileOnly("javax.servlet:javax.servlet-api:3.1.0")
     testCompile("org.assertj:assertj-core:3.9.1")
     testCompile("org.junit.jupiter:junit-jupiter-api")
     testCompile("org.springframework:spring-test")
