@@ -1,6 +1,6 @@
 package io.playback;
 
-import io.playback.util.StringUtils;
+import io.playback.util.Assert;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -11,9 +11,7 @@ public final class MediaTypeParser {
     }
 
     public static MediaType parse(String mediaType) {
-        if (StringUtils.isEmpty(mediaType)) {
-            throw new IllegalArgumentException("'mediatype' must not be empty");
-        }
+        Assert.assertNotEmpty(mediaType, "'mediatype' must not be empty");
 
         String fullType = parseFullType(mediaType);
         String type = fullType.split("/")[0];
