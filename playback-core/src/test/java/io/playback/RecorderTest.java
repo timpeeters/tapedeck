@@ -46,7 +46,7 @@ public class RecorderTest {
                 Response.ok().build());
 
         assertThatThrownBy(() -> recorder.replay(Request.get()
-                .header(b -> b.withName(Headers.ACCEPT).withValue("application/xml"))
+                .header(() -> Header.header(Headers.ACCEPT, "application/xml"))
                 .build()))
                 .isInstanceOf(NoMatchingRecordingFound.class);
     }

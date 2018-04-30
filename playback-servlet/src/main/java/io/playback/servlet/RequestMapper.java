@@ -30,9 +30,6 @@ final class RequestMapper {
     }
 
     private static Function<String, Header> mapHeader(HttpServletRequest req) {
-        return name -> Header.builder()
-                .withName(name)
-                .withValues(Collections.list(req.getHeaders(name)).toArray(new String[0]))
-                .build();
+        return name -> Header.header(name, Collections.list(req.getHeaders(name)).toArray(new String[0]));
     }
 }

@@ -21,10 +21,7 @@ public class RequestMapperTest {
                     assertThat(r.getMethod()).isEqualTo(RequestMethod.GET);
                     assertThat(r.getUri()).isEqualTo(URI.create("/"));
                     assertThat(r.getQueryParams()).containsValue(QueryParam.queryParam("q", "test"));
-                    assertThat(r.getHeaders()).containsValue(Header.builder()
-                            .withName(Headers.ACCEPT)
-                            .withValue("application/json")
-                            .build());
+                    assertThat(r.getHeaders()).containsValue(Header.header(Headers.ACCEPT, "application/json"));
                 });
     }
 }

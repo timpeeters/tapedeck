@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Request {
     private final RequestMethod method;
@@ -105,17 +105,13 @@ public class Request {
         }
 
         public Builder header(String name, String value) {
-            headers.put(name, Header.builder().withName(name).withValue(value).build());
+            headers.put(name, Header.header(name, value));
 
             return this;
         }
 
-        public Builder header(Consumer<Header.Builder> consumer) {
-            Header.Builder builder = Header.builder();
-
-            consumer.accept(builder);
-
-            Header header = builder.build();
+        public Builder header(Supplier<Header> supplier) {
+            Header header = supplier.get();
 
             headers.put(header.getName(), header);
 

@@ -1,5 +1,6 @@
 package io.playback.matcher;
 
+import io.playback.Header;
 import io.playback.Headers;
 import io.playback.Request;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,22 +33,18 @@ public class HeadersMatcherTest {
 
     @Test
     public void matches_sameHeader_multipleValues() {
-        assertThat(matcher.matches(Request.get().header(b -> b
-                        .withName(Headers.ACCEPT)
-                        .withValues(APPLICATION_XML, APPLICATION_JSON)).build(),
-                Request.get().header(b -> b
-                        .withName(Headers.ACCEPT)
-                        .withValues(APPLICATION_XML, APPLICATION_JSON)).build())).isTrue();
+        assertThat(matcher.matches(
+                Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_XML, APPLICATION_JSON)).build(),
+                Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_XML, APPLICATION_JSON)).build()
+        )).isTrue();
     }
 
     @Test
     public void matches_differentValues() {
-        assertThat(matcher.matches(Request.get().header(b -> b
-                        .withName(Headers.ACCEPT)
-                        .withValues("text/html", "text/*")).build(),
-                Request.get().header(b -> b
-                        .withName(Headers.ACCEPT)
-                        .withValues(APPLICATION_XML, APPLICATION_JSON)).build())).isFalse();
+        assertThat(matcher.matches(
+                Request.get().header(() -> Header.header(Headers.ACCEPT, "text/html", "text/*")).build(),
+                Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_XML, APPLICATION_JSON)).build()
+        )).isFalse();
     }
 
     @Test
