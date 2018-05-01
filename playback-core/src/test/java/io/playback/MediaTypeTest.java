@@ -8,7 +8,7 @@ public class MediaTypeTest implements EqualsContractTester<MediaType>, HashCodeC
 
     @Test
     public void testToString() {
-        assertThat(new MediaType("text", "plain").toString()).isEqualTo("text/plain");
+        assertThat(MediaType.of("text", "plain").toString()).isEqualTo("text/plain");
     }
 
     @Override

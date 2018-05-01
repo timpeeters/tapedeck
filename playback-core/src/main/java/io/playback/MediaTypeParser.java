@@ -17,7 +17,7 @@ public final class MediaTypeParser {
         String type = fullType.split("/")[0];
         String subtype = fullType.split("/")[1];
 
-        return new MediaType(type, subtype, parseParameters(mediaType));
+        return MediaType.of(type, subtype, parseParameters(mediaType));
     }
 
     private static String parseFullType(String mediaType) {

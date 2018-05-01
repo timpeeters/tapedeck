@@ -3,10 +3,11 @@ package io.playback;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class MediaType implements Serializable {
+public final class MediaType implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String PARAM_CHARSET = "charset";
@@ -15,14 +16,18 @@ public class MediaType implements Serializable {
     private final String subtype;
     private final Map<String, String> parameters;
 
-    public MediaType(String type, String subtype) {
-        this(type, subtype, Collections.emptyMap());
-    }
-
-    public MediaType(String type, String subtype, Map<String, String> parameters) {
+    private MediaType(String type, String subtype, Map<String, String> parameters) {
         this.type = type;
         this.subtype = subtype;
         this.parameters = Collections.unmodifiableMap(parameters);
+    }
+
+    public static MediaType of(String type, String subtype) {
+        return new MediaType(type, subtype, Collections.emptyMap());
+    }
+
+    public static MediaType of(String type, String subtype, Map<String, String> parameters) {
+        return new MediaType(type, subtype, parameters);
     }
 
     public static MediaType parse(String mediaType) {
@@ -45,6 +50,13 @@ public class MediaType implements Serializable {
         String charset = getParameter(PARAM_CHARSET);
 
         return charset == null ? null : Charset.forName(charset);
+    }
+
+    public MediaType param(String name, String value) {
+        Map<String, String> params = new HashMap<>(parameters);
+        params.put(name, value);
+
+        return MediaType.of(type, subtype, params);
     }
 
     @Override
