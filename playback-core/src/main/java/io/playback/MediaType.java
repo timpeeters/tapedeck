@@ -34,14 +34,6 @@ public final class MediaType implements Serializable {
         return MediaTypeParser.parse(mediaType);
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getSubtype() {
-        return subtype;
-    }
-
     public String getParameter(String name) {
         return parameters.get(name);
     }
