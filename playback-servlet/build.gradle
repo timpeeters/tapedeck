@@ -1,10 +1,12 @@
-dependencies {
-    compile project(":playback-core")
-    compileOnly("javax.servlet:javax.servlet-api:3.1.0")
+apply plugin: 'java-library'
 
-    testCompileOnly("javax.servlet:javax.servlet-api:3.1.0")
-    testCompile("org.assertj:assertj-core:3.9.1")
-    testCompile("org.junit.jupiter:junit-jupiter-api")
-    testCompile("org.springframework:spring-test")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+dependencies {
+    api project(':playback-core')
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+
+    testCompileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+    testImplementation 'org.assertj:assertj-core:3.9.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.springframework:spring-test'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
