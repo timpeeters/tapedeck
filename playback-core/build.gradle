@@ -1,7 +1,7 @@
 apply plugin: 'java-library'
 
 dependencies {
-    testImplementation 'org.assertj:assertj-core:3.9.1'
+    testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
