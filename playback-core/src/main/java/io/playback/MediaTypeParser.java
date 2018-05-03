@@ -11,7 +11,7 @@ public final class MediaTypeParser {
     }
 
     public static MediaType parse(String mediaType) {
-        Assert.assertNotEmpty(mediaType, "'mediatype' must not be empty");
+        Assert.notEmpty(mediaType, "'mediatype' must not be empty");
 
         String fullType = parseFullType(mediaType);
         String type = fullType.split("/")[0];

@@ -100,6 +100,12 @@ public class Response {
             return this;
         }
 
+        public Builder headers(Header... h) {
+            Arrays.stream(h).forEach(header -> headers.put(header.getName(), header.getValues()));
+
+            return this;
+        }
+
         public Response build() {
             return new Response(this);
         }

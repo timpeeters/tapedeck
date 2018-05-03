@@ -19,6 +19,10 @@ public final class Header {
         return name;
     }
 
+    public List<String> getValues() {
+        return values;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (!(otherObject instanceof Header)) {

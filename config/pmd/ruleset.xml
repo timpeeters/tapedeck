@@ -35,7 +35,7 @@
 
     <rule ref="category/java/codestyle.xml/LongVariable">
         <properties>
-            <property name="minimum" value="20"/>
+            <property name="minimum" value="25"/>
         </properties>
     </rule>
 
@@ -59,8 +59,16 @@
     </rule>
 
     <rule ref="category/java/errorprone.xml">
+        <exclude name="AssignmentInOperand"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <exclude name="BeanMembersShouldSerialize"/>
+        <exclude name="DataflowAnomalyAnalysis"/>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml/AssignmentInOperand">
+        <properties>
+            <property name="allowWhile" value="true"/>
+        </properties>
     </rule>
 
     <rule ref="category/java/multithreading.xml">
