@@ -1,5 +1,7 @@
 package io.playback.client;
 
+import io.playback.Header;
+import io.playback.Headers;
 import io.playback.Request;
 import io.playback.RequestMethod;
 import io.playback.Response;
@@ -21,6 +23,7 @@ public class DefaultHttpClientTest {
         Response response = new DefaultHttpClient().execute(Request.builder()
                 .method(RequestMethod.GET)
                 .uri(new URL(server.getBaseUrl(), "/").toURI())
+                .header(() -> Header.header(Headers.ACCEPT, "text/html"))
                 .build());
 
         assertThat(response.getStatusCode()).isEqualTo("200");
