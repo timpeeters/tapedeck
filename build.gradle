@@ -34,6 +34,8 @@ subprojects {
     }
 
     dependencies {
+        compile 'org.apache.commons:commons-lang3:3.6'
+
         implementation 'org.junit:junit-bom:5.2.0'
         implementation 'org.springframework.boot:spring-boot-dependencies:2.0.1.RELEASE'
     }
