@@ -72,8 +72,8 @@ public class Request {
         return new StringJoiner(", ", getClass().getSimpleName() + "[", "]")
                 .add("method=" + method)
                 .add("uri=" + uri)
-                .add("queryParam=" + queryParams)
-                .add("headers=" + headers)
+                .add("queryParams=" + queryParams.values())
+                .add("headers=" + headers.values())
                 .toString();
     }
 

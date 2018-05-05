@@ -2,6 +2,7 @@ package io.playback;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RequestTest implements EqualsContractTester<Request>, HashCodeContractTester<Request> {
@@ -18,5 +19,11 @@ public class RequestTest implements EqualsContractTester<Request>, HashCodeContr
     @Test
     public void post_invalidUri() {
         assertThatThrownBy(() -> Request.post(" ")).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void toStringTest() {
+        assertThat(getInstance().toString())
+                .isEqualTo("Request[method=GET, uri=/, queryParams=[id=1], headers=[Accept=text/html]]");
     }
 }
