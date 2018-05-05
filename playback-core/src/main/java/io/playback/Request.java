@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.function.Supplier;
 
 public class Request {
@@ -43,6 +45,36 @@ public class Request {
 
     public byte[] getBody() {
         return body == null ? null : Arrays.copyOf(body, body.length);
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (!(otherObject instanceof Request)) {
+            return false;
+        }
+
+        Request otherRequest = (Request) otherObject;
+
+        return Objects.equals(method, otherRequest.method) &&
+                Objects.equals(uri, otherRequest.uri) &&
+                Objects.equals(queryParams, otherRequest.queryParams) &&
+                Objects.equals(headers, otherRequest.headers) &&
+                Objects.equals(body, otherRequest.body);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method, uri, queryParams, headers, body);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", getClass().getSimpleName() + "[", "]")
+                .add("method=" + method)
+                .add("uri=" + uri)
+                .add("queryParam=" + queryParams)
+                .add("headers=" + headers)
+                .toString();
     }
 
     public static Builder builder() {

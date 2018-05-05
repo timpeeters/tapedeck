@@ -1,22 +1,34 @@
 package io.playback;
 
+import io.playback.client.HttpClient;
 import io.playback.matcher.RequestMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class RecorderTest {
     private static final String OK_200 = "200";
 
     private Recorder recorder;
 
+    @Mock
+    private HttpClient httpClient;
+
     @BeforeEach
     public void initialize() {
-        recorder = new Recorder(RequestMatchers.DEFAULT);
+        recorder = new Recorder(RequestMatchers.DEFAULT, httpClient);
     }
 
     @Test
@@ -104,5 +116,23 @@ public class RecorderTest {
 
         assertThat(recorder.replay(Request.get().build())).satisfies(r ->
                 assertThat(r.getHeader(Headers.CONTENT_TYPE)).containsExactly("application/json"));
+    }
+
+    @Test
+    public void record() throws IOException {
+        when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
+
+        assertThat(recorder.record(Request.get().build())).satisfies(response ->
+                assertThat(response.getStatusCode()).isEqualTo("200"));
+    }
+
+    @Test
+    public void record_forwardOnlyOnce() throws Exception {
+        when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
+
+        recorder.record(Request.get().build());
+        recorder.record(Request.get().build());
+
+        verify(httpClient, Mockito.times(1)).execute(Request.get().build());
     }
 }

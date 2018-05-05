@@ -1,6 +1,7 @@
 package io.playback.servlet;
 
 import io.playback.Recorder;
+import io.playback.client.DefaultHttpClient;
 import io.playback.matcher.RequestMatchers;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet
 public class PlaybackServlet extends HttpServlet {
-    private final Recorder recorder = new Recorder(RequestMatchers.DEFAULT);
+    private final Recorder recorder = new Recorder(RequestMatchers.DEFAULT, new DefaultHttpClient());
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
