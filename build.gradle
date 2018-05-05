@@ -8,10 +8,6 @@ plugins {
 
 defaultTasks 'build'
 
-dependencies {
-    compile 'org.apache.commons:commons-lang3:3.7'
-}
-
 jacoco {
     toolVersion = '0.8.1'
 }
