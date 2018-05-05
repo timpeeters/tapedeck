@@ -6,21 +6,30 @@ import io.playback.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import java.net.URI;
 import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DefaultHttpClientTest {
     @RegisterExtension
     static HttpServerExtension server = HttpServerExtension.builder().build();
 
     @Test
-    public void test() throws Exception {
+    public void execute() throws Exception {
         Response response = new DefaultHttpClient().execute(Request.builder()
                 .method(RequestMethod.GET)
                 .uri(new URL(server.getBaseUrl(), "/").toURI())
                 .build());
 
         assertThat(response.getStatusCode()).isEqualTo("200");
+    }
+
+    @Test
+    public void execute_malformedUrl() {
+        assertThatThrownBy(() -> new DefaultHttpClient().execute(Request.builder().uri(URI.create("x://test")).build()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Malformed URL");
     }
 }
