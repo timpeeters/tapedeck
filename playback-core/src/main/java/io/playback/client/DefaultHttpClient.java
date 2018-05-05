@@ -7,6 +7,7 @@ import io.playback.util.InputStreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,10 +20,14 @@ public class DefaultHttpClient implements HttpClient {
     private static final int READ_TIMEOUT_MILLIS = 10_000;
 
     @Override
-    public Response execute(Request request) throws IOException {
-        HttpURLConnection connection = send(request);
+    public Response execute(Request request) {
+        try {
+            HttpURLConnection connection = send(request);
 
-        return createResponse(connection);
+            return createResponse(connection);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     private HttpURLConnection send(Request request) throws IOException {

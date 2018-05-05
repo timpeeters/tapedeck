@@ -3,8 +3,6 @@ package io.playback;
 import io.playback.client.HttpClient;
 import io.playback.matcher.RequestMatcher;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +23,7 @@ public class Recorder {
 
     public Response record(Request request) {
         return seek(request).orElseGet(() -> {
-            Response response = forward(request);
+            Response response = httpClient.execute(request);
 
             record(request, response);
 
@@ -42,13 +40,5 @@ public class Recorder {
                 .filter(rec -> matcher.matches(rec.getRequest(), request))
                 .findFirst()
                 .map(Recording::getResponse);
-    }
-
-    private Response forward(Request request) {
-        try {
-            return httpClient.execute(request);
-        } catch (IOException e) {
-            throw new UncheckedIOException("Unable to forward request", e);
-        }
     }
 }
