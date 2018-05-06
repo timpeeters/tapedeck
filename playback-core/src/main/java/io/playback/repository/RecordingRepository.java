@@ -1,4 +1,6 @@
-package io.playback;
+package io.playback.repository;
+
+import io.playback.Recording;
 
 import java.util.stream.Stream;
 

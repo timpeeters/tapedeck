@@ -39,6 +39,10 @@ public class Response {
         return statusCode;
     }
 
+    public String getStatusText() {
+        return statusText;
+    }
+
     public String getBodyAsString() {
         return new String(body, getCharset());
     }

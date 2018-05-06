@@ -4,6 +4,8 @@ import io.playback.client.DefaultHttpClient;
 import io.playback.client.HttpClient;
 import io.playback.matcher.RequestMatcher;
 import io.playback.matcher.RequestMatchers;
+import io.playback.repository.InMemoryRecordingRepository;
+import io.playback.repository.RecordingRepository;
 
 public class Configuration {
     private final RequestMatcher matcher;
