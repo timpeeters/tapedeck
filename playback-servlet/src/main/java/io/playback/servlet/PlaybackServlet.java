@@ -1,8 +1,6 @@
 package io.playback.servlet;
 
 import io.playback.Playback;
-import io.playback.client.DefaultHttpClient;
-import io.playback.matcher.RequestMatchers;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet
 public class PlaybackServlet extends HttpServlet {
-    private final Playback playback = new Playback(RequestMatchers.DEFAULT, new DefaultHttpClient());
+    private final Playback playback = Playback.configure();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

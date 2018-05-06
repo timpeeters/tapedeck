@@ -1,20 +1,28 @@
 package io.playback;
 
-import io.playback.client.HttpClient;
-import io.playback.matcher.RequestMatcher;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
-public class Playback {
+public final class Playback {
     private final List<Recording> recordings = new ArrayList<>();
-    private final RequestMatcher matcher;
-    private final HttpClient httpClient;
+    private final Configuration config;
 
-    public Playback(RequestMatcher matcher, HttpClient httpClient) {
-        this.matcher = matcher;
-        this.httpClient = httpClient;
+    private Playback(Configuration config) {
+        this.config = config;
+    }
+
+    public static Playback configure() {
+        return new Playback(Configuration.builder().build());
+    }
+
+    public static Playback configure(Consumer<Configuration.Builder> consumer) {
+        Configuration.Builder builder = Configuration.builder();
+
+        consumer.accept(builder);
+
+        return new Playback(builder.build());
     }
 
     public void record(Request request, Response response) {
@@ -23,7 +31,7 @@ public class Playback {
 
     public Response record(Request request) {
         return seek(request).orElseGet(() -> {
-            Response response = httpClient.execute(request);
+            Response response = config.httpClient().execute(request);
 
             record(request, response);
 
@@ -37,7 +45,7 @@ public class Playback {
 
     private Optional<Response> seek(Request request) {
         return recordings.stream()
-                .filter(rec -> matcher.matches(rec.getRequest(), request))
+                .filter(rec -> config.matcher().matches(rec.getRequest(), request))
                 .findFirst()
                 .map(Recording::getResponse);
     }

@@ -1,7 +1,6 @@
 package io.playback;
 
 import io.playback.client.HttpClient;
-import io.playback.matcher.RequestMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +26,7 @@ public class PlaybackTest {
 
     @BeforeEach
     public void initialize() {
-        playback = new Playback(RequestMatchers.DEFAULT, httpClient);
+        playback = Playback.configure(b -> b.httpClient(httpClient));
     }
 
     @Test
@@ -119,7 +117,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void record() throws IOException {
+    public void record() {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
         assertThat(playback.record(Request.get().build())).satisfies(response ->
@@ -127,7 +125,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void record_forwardOnlyOnce() throws Exception {
+    public void record_forwardOnlyOnce() {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
         playback.record(Request.get().build());
