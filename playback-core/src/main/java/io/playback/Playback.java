@@ -26,7 +26,7 @@ public final class Playback {
         config.recordingRepository().add(new Recording(request, response));
     }
 
-    public Response record(Request request) {
+    public Response play(Request request) {
         return seek(request).orElseGet(() -> {
             Response response = config.httpClient().execute(request);
 

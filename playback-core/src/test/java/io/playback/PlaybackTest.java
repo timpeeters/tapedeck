@@ -117,19 +117,19 @@ public class PlaybackTest {
     }
 
     @Test
-    public void record() {
+    public void play() {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
-        assertThat(playback.record(Request.get().build())).satisfies(response ->
+        assertThat(playback.play(Request.get().build())).satisfies(response ->
                 assertThat(response.getStatusCode()).isEqualTo("200"));
     }
 
     @Test
-    public void record_forwardOnlyOnce() {
+    public void play_forwardOnlyOnce() {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
-        playback.record(Request.get().build());
-        playback.record(Request.get().build());
+        playback.play(Request.get().build());
+        playback.play(Request.get().build());
 
         verify(httpClient, Mockito.times(1)).execute(Request.get().build());
     }
