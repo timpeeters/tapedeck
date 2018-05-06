@@ -18,46 +18,46 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class RecorderTest {
+public class PlaybackTest {
     private static final String OK_200 = "200";
 
-    private Recorder recorder;
+    private Playback playback;
 
     @Mock
     private HttpClient httpClient;
 
     @BeforeEach
     public void initialize() {
-        recorder = new Recorder(RequestMatchers.DEFAULT, httpClient);
+        playback = new Playback(RequestMatchers.DEFAULT, httpClient);
     }
 
     @Test
     public void noMatchingRecording() {
-        assertThatThrownBy(() -> recorder.replay(Request.get().build())).isInstanceOf(NoMatchingRecordingFound.class);
+        assertThatThrownBy(() -> playback.replay(Request.get().build())).isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
     public void noMatchingRecording_differentRequestMethod() {
-        recorder.record(Request.get().build(), Response.ok().build());
+        playback.record(Request.get().build(), Response.ok().build());
 
-        assertThatThrownBy(() -> recorder.replay(Request.post().build())).isInstanceOf(NoMatchingRecordingFound.class);
+        assertThatThrownBy(() -> playback.replay(Request.post().build())).isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
     public void noMatchingRecording_differentUri() {
-        recorder.record(Request.get("/a").build(), Response.ok().build());
+        playback.record(Request.get("/a").build(), Response.ok().build());
 
-        assertThatThrownBy(() -> recorder.replay(Request.get("/b").build()))
+        assertThatThrownBy(() -> playback.replay(Request.get("/b").build()))
                 .isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
     public void noMatchingRecording_differentAcceptHeader() {
-        recorder.record(
+        playback.record(
                 Request.get().header(Headers.ACCEPT, "application/json").build(),
                 Response.ok().build());
 
-        assertThatThrownBy(() -> recorder.replay(Request.get()
+        assertThatThrownBy(() -> playback.replay(Request.get()
                 .header(() -> Header.header(Headers.ACCEPT, "application/xml"))
                 .build()))
                 .isInstanceOf(NoMatchingRecordingFound.class);
@@ -65,56 +65,56 @@ public class RecorderTest {
 
     @Test
     public void noMatchingRecording_queryParam() {
-        recorder.record(Request.get().queryParam("id", "1").build(),
+        playback.record(Request.get().queryParam("id", "1").build(),
                 Response.ok().build());
 
-        assertThatThrownBy(() -> recorder.replay(Request.get().queryParam("id", "2").build()))
+        assertThatThrownBy(() -> playback.replay(Request.get().queryParam("id", "2").build()))
                 .isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
     public void noMatchingRecording_differentRequestBody() {
-        recorder.record(
+        playback.record(
                 Request.post().body("hello").build(),
                 Response.ok().build());
 
-        assertThatThrownBy(() -> recorder.replay(Request.post().body("world").build()))
+        assertThatThrownBy(() -> playback.replay(Request.post().body("world").build()))
                 .isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
     public void replay_statusCode() {
-        recorder.record(Request.get().build(), Response.builder().statusCode(OK_200).build());
+        playback.record(Request.get().build(), Response.builder().statusCode(OK_200).build());
 
-        assertThat(recorder.replay(Request.get().build())).satisfies(r ->
+        assertThat(playback.replay(Request.get().build())).satisfies(r ->
                 assertThat(r.getStatusCode()).isEqualTo(OK_200));
     }
 
     @Test
     public void replay_body() {
-        recorder.record(Request.get().build(), Response.builder().body("Hello world").build());
+        playback.record(Request.get().build(), Response.builder().body("Hello world").build());
 
-        assertThat(recorder.replay(Request.get().build())).satisfies(r ->
+        assertThat(playback.replay(Request.get().build())).satisfies(r ->
                 assertThat(r.getBodyAsString()).isEqualTo("Hello world"));
     }
 
     @Test
     public void replay_bodyWithEncoding() {
-        recorder.record(Request.get().build(), Response.builder()
+        playback.record(Request.get().build(), Response.builder()
                 .header(Headers.CONTENT_TYPE, "text/plain;charset=iso-8859-1")
                 .body("Hélicoptère".getBytes(Charset.forName("ISO-8859-1"))).build());
 
-        assertThat(recorder.replay(Request.get().build())).satisfies(r ->
+        assertThat(playback.replay(Request.get().build())).satisfies(r ->
                 assertThat(r.getBodyAsString()).isEqualTo("Hélicoptère"));
     }
 
     @Test
     public void replay_header() {
-        recorder.record(
+        playback.record(
                 Request.get().build(),
                 Response.builder().header(Headers.CONTENT_TYPE, "application/json").build());
 
-        assertThat(recorder.replay(Request.get().build())).satisfies(r ->
+        assertThat(playback.replay(Request.get().build())).satisfies(r ->
                 assertThat(r.getHeader(Headers.CONTENT_TYPE)).containsExactly("application/json"));
     }
 
@@ -122,7 +122,7 @@ public class RecorderTest {
     public void record() throws IOException {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
-        assertThat(recorder.record(Request.get().build())).satisfies(response ->
+        assertThat(playback.record(Request.get().build())).satisfies(response ->
                 assertThat(response.getStatusCode()).isEqualTo("200"));
     }
 
@@ -130,8 +130,8 @@ public class RecorderTest {
     public void record_forwardOnlyOnce() throws Exception {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
-        recorder.record(Request.get().build());
-        recorder.record(Request.get().build());
+        playback.record(Request.get().build());
+        playback.record(Request.get().build());
 
         verify(httpClient, Mockito.times(1)).execute(Request.get().build());
     }

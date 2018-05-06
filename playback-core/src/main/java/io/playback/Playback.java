@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Recorder {
+public class Playback {
     private final List<Recording> recordings = new ArrayList<>();
     private final RequestMatcher matcher;
     private final HttpClient httpClient;
 
-    public Recorder(RequestMatcher matcher, HttpClient httpClient) {
+    public Playback(RequestMatcher matcher, HttpClient httpClient) {
         this.matcher = matcher;
         this.httpClient = httpClient;
     }
