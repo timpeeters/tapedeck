@@ -7,15 +7,21 @@ import io.playback.matcher.RequestMatchers;
 
 public class Configuration {
     private final RequestMatcher matcher;
+    private final RecordingRepository recordingRepository;
     private final HttpClient httpClient;
 
     private Configuration(Builder builder) {
         this.matcher = builder.matcher;
+        this.recordingRepository = builder.recordingRepository;
         this.httpClient = builder.httpClient;
     }
 
     public RequestMatcher matcher() {
         return matcher;
+    }
+
+    public RecordingRepository recordingRepository() {
+        return recordingRepository;
     }
 
     public HttpClient httpClient() {
@@ -28,10 +34,17 @@ public class Configuration {
 
     public static class Builder {
         private RequestMatcher matcher = RequestMatchers.DEFAULT;
+        private RecordingRepository recordingRepository = new InMemoryRecordingRepository();
         private HttpClient httpClient = new DefaultHttpClient();
 
         public Builder matcher(RequestMatcher matcher) {
             this.matcher = matcher;
+
+            return this;
+        }
+
+        public Builder recordingRepository(RecordingRepository recordingRepository) {
+            this.recordingRepository = recordingRepository;
 
             return this;
         }

@@ -1,12 +1,9 @@
 package io.playback;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public final class Playback {
-    private final List<Recording> recordings = new ArrayList<>();
     private final Configuration config;
 
     private Playback(Configuration config) {
@@ -26,7 +23,7 @@ public final class Playback {
     }
 
     public void record(Request request, Response response) {
-        recordings.add(new Recording(request, response));
+        config.recordingRepository().add(new Recording(request, response));
     }
 
     public Response record(Request request) {
@@ -44,7 +41,7 @@ public final class Playback {
     }
 
     private Optional<Response> seek(Request request) {
-        return recordings.stream()
+        return config.recordingRepository().find()
                 .filter(rec -> config.matcher().matches(rec.getRequest(), request))
                 .findFirst()
                 .map(Recording::getResponse);
