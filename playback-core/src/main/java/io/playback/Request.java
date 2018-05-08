@@ -59,7 +59,7 @@ public class Request {
                 Objects.equals(uri, otherRequest.uri) &&
                 Objects.equals(queryParams, otherRequest.queryParams) &&
                 Objects.equals(headers, otherRequest.headers) &&
-                Objects.equals(body, otherRequest.body);
+                Arrays.equals(body, otherRequest.body);
     }
 
     @Override
