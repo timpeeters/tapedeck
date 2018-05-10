@@ -1,6 +1,8 @@
 package io.playback;
 
 import io.playback.client.HttpClient;
+import io.playback.matcher.RequestMatchers;
+import io.playback.repository.InMemoryRecordingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +28,10 @@ public class PlaybackTest {
 
     @BeforeEach
     public void initialize() {
-        playback = Playback.configure(b -> b.httpClient(httpClient));
+        playback = Playback.configure(builder -> builder
+                .httpClient(httpClient)
+                .matcher(RequestMatchers.DEFAULT)
+                .recordingRepository(new InMemoryRecordingRepository()));
     }
 
     @Test
