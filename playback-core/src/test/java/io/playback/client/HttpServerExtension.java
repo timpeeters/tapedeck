@@ -30,12 +30,12 @@ public class HttpServerExtension implements AfterAllCallback, BeforeAllCallback,
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
         server.start();
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
         server.stop(0);
     }
 
