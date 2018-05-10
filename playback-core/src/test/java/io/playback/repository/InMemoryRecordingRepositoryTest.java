@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InMemoryRecordingRepositoryTest {
     @Test
     public void emptyRepository() {
-        assertThat(new InMemoryRecordingRepository().find().count()).isZero();
+        assertThat(new InMemoryRecordingRepository().find()).isEmpty();
     }
 
     @Test
@@ -19,6 +19,6 @@ public class InMemoryRecordingRepositoryTest {
 
         repository.add(new Recording(Request.get().build(), Response.ok().build()));
 
-        assertThat(repository.find().count()).isEqualTo(1);
+        assertThat(repository.find()).hasSize(1);
     }
 }

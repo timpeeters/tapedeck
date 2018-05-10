@@ -41,7 +41,7 @@ public final class Playback {
     }
 
     private Optional<Response> seek(Request request) {
-        return config.recordingRepository().find()
+        return config.recordingRepository().find().stream()
                 .filter(rec -> config.matcher().matches(rec.getRequest(), request))
                 .findFirst()
                 .map(Recording::getResponse);

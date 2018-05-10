@@ -2,10 +2,10 @@ package io.playback.repository;
 
 import io.playback.Recording;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 public interface RecordingRepository {
     void add(Recording recording);
 
-    Stream<Recording> find();
+    List<Recording> find();
 }
