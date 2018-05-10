@@ -3,6 +3,9 @@ plugins:
     enabled: true
     config:
       file: "config/checkstyle/checkstyle.xml"
+  editorconfig:
+    enabled: true
+    channel: beta
   pmd:
     enabled: true
     config:
