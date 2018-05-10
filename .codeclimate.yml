@@ -1,3 +1,10 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        java:
+          mass_threshold: 50
 plugins:
   checkstyle:
     enabled: true
