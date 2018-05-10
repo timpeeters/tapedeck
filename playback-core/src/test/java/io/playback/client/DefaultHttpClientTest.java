@@ -8,6 +8,7 @@ import io.playback.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URL;
 
@@ -34,5 +35,13 @@ public class DefaultHttpClientTest {
         assertThatThrownBy(() -> new DefaultHttpClient().execute(Request.builder().uri(URI.create("x://test")).build()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Malformed URL");
+    }
+
+    @Test
+    public void execute_emulateIoException() {
+        assertThatThrownBy(() -> new DefaultHttpClient().execute(Request.builder()
+                .method(RequestMethod.GET)
+                .uri(URI.create("http://127.0.0.1:0/"))
+                .build())).isInstanceOf(UncheckedIOException.class);
     }
 }
