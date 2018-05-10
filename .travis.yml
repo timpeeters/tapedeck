@@ -5,6 +5,9 @@ jdk:
 
 before_install:
   - wget -q -O ~/codacy-coverage-reporter-assembly.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/4.0.0/codacy-coverage-reporter-4.0.0-assembly.jar
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -17,3 +20,6 @@ cache:
 
 after_success:
   - java -jar ~/codacy-coverage-reporter-assembly.jar report -l Java -r build/reports/jacoco/report.xml
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
