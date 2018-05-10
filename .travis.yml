@@ -3,6 +3,9 @@ language: java
 jdk:
   - oraclejdk8
 
+before_install:
+  - wget -q -O ~/codacy-coverage-reporter-assembly.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/4.0.0/codacy-coverage-reporter-4.0.0-assembly.jar
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -13,4 +16,4 @@ cache:
     - $HOME/.gradle/wrapper/
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - java -jar ~/codacy-coverage-reporter-assembly.jar report -l Java -r build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml

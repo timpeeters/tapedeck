@@ -58,6 +58,8 @@ subprojects {
 }
 
 task codeCoverageReport(type: JacocoReport) {
+    dependsOn = subprojects.build
+
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
     subprojects.each {
@@ -66,14 +68,10 @@ task codeCoverageReport(type: JacocoReport) {
 
     reports {
         xml.enabled = true
-        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
         html.enabled = false
         csv.enabled = false
     }
-}
-
-codeCoverageReport.dependsOn {
-    subprojects*.test
 }
 
 rootProject.check.dependsOn codeCoverageReport
