@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet
 public class PlaybackServlet extends HttpServlet {
-    private final Playback playback = Playback.configure();
+    private final Playback playback = Playback.create();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

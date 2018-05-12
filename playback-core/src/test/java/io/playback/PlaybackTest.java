@@ -28,7 +28,7 @@ public class PlaybackTest {
 
     @BeforeEach
     public void initialize() {
-        playback = Playback.configure(builder -> builder
+        playback = Playback.configure(Configuration.builder()
                 .httpClient(httpClient)
                 .matcher(RequestMatchers.DEFAULT)
                 .recordingRepository(new InMemoryRecordingRepository()));

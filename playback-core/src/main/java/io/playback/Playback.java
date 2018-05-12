@@ -1,7 +1,6 @@
 package io.playback;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public final class Playback {
     private final Configuration config;
@@ -10,15 +9,11 @@ public final class Playback {
         this.config = config;
     }
 
-    public static Playback configure() {
-        return new Playback(Configuration.builder().build());
+    public static Playback create() {
+        return configure(Configuration.builder());
     }
 
-    public static Playback configure(Consumer<Configuration.Builder> consumer) {
-        Configuration.Builder builder = Configuration.builder();
-
-        consumer.accept(builder);
-
+    public static Playback configure(Configuration.Builder builder) {
         return new Playback(builder.build());
     }
 
