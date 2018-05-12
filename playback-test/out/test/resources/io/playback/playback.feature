@@ -18,9 +18,15 @@ Feature: Playback
     Then the response is 200 OK
     And the http client received 1 request
 
-  Scenario: Record different request
+  Scenario: Record multiple requests
     Given the http client is configured to return 200 OK
     And I receive a GET / request
     When I receive a POST / request
     Then the response is 200 OK
     And the http client received 2 requests
+
+  Scenario: Not found response
+    Given the http client is configured to return 404 Not found
+    When I receive a GET /xyz request
+    Then the response is 404 Not found
+    And the http client received 1 request
