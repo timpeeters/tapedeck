@@ -13,7 +13,7 @@ public final class Playback {
         return configure(Configuration.builder());
     }
 
-    public static Playback configure(Configuration.Builder builder) {
+    public static Playback configure(ConfigurationBuilder builder) {
         return new Playback(builder.build());
     }
 
