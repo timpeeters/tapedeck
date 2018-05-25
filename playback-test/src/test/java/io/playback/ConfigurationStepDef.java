@@ -24,7 +24,7 @@ public class ConfigurationStepDef implements En {
                         .statusText(statusText)
                         .build()));
 
-        Then("the http client received {int} requests?", (Integer requestCount) ->
+        Then("the http client received {int} request(s)", (Integer requestCount) ->
                 verify(world.httpClient, times(requestCount)).execute(any(Request.class)));
     }
 }
