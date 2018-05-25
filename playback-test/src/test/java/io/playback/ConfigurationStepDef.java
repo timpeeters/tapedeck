@@ -18,13 +18,13 @@ public class ConfigurationStepDef implements En {
         Given("a mock http client", () ->
                 world.httpClient = mock(HttpClient.class));
 
-        Given("^the http client is configured to return (\\w+) (.*)$", (String statusCode, String statusText) ->
+        Given("the http client is configured to return {word} {word}", (String statusCode, String statusText) ->
                 when(world.httpClient.execute(any(Request.class))).thenReturn(Response.builder()
                         .statusCode(statusCode)
                         .statusText(statusText)
                         .build()));
 
-        Then("^the http client received (\\d+) requests?$", (Integer requestCount) ->
+        Then("the http client received {int} requests?", (Integer requestCount) ->
                 verify(world.httpClient, times(requestCount)).execute(any(Request.class)));
     }
 }
