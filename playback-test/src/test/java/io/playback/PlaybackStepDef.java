@@ -11,10 +11,10 @@ public class PlaybackStepDef implements En {
                         .httpClient(world.httpClient)
                         .recordingRepository(world.recordingRepository)));
 
-        When("I receive a {word} {word} request", (String method, String uri) ->
+        When("I receive a {requestMethod} {uri} request", (RequestMethod method, URI uri) ->
                 world.response = world.playback.play(Request.builder()
-                        .method(RequestMethod.valueOf(method))
-                        .uri(URI.create(uri))
+                        .method(method)
+                        .uri(uri)
                         .build()));
     }
 }
