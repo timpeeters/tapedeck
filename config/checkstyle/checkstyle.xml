@@ -141,6 +141,8 @@
             <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
         </module>
 
+        <module name="RedundantModifier"/>
+
         <module name="RequireThis">
             <property name="checkMethods" value="false"/>
         </module>
