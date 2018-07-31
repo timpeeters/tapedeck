@@ -1,6 +1,7 @@
 package io.playback.matcher;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public final class Result {
@@ -16,6 +17,22 @@ public final class Result {
 
     public boolean isExactMatch() {
         return distance == 0;
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (!(otherObject instanceof Result)) {
+            return false;
+        }
+
+        Result otherResult = (Result) otherObject;
+
+        return Objects.equals(distance, otherResult.distance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(distance);
     }
 
     @Override
