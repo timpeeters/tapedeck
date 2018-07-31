@@ -40,7 +40,7 @@ public final class RequestMatchers implements RequestMatcher {
     }
 
     @Override
-    public boolean matches(Request request, Request otherRequest) {
-        return matchers.stream().allMatch(matcher -> matcher.matches(request, otherRequest));
+    public Result matches(Request request, Request otherRequest) {
+        return Result.of(matchers.stream().allMatch(matcher -> matcher.matches(request, otherRequest).isExactMatch()));
     }
 }

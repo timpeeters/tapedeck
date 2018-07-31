@@ -21,14 +21,14 @@ public class HeadersMatcherTest {
 
     @Test
     public void matches_withoutHeaders() {
-        assertThat(matcher.matches(Request.get().build(), Request.get().build())).isTrue();
+        assertThat(matcher.matches(Request.get().build(), Request.get().build()).isExactMatch()).isTrue();
     }
 
     @Test
     public void matches_sameHeader() {
         assertThat(matcher.matches(
                 Request.get().header(Headers.ACCEPT, APPLICATION_JSON).build(),
-                Request.get().header(Headers.ACCEPT, APPLICATION_JSON).build())).isTrue();
+                Request.get().header(Headers.ACCEPT, APPLICATION_JSON).build()).isExactMatch()).isTrue();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class HeadersMatcherTest {
         assertThat(matcher.matches(
                 Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_XML, APPLICATION_JSON)).build(),
                 Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_XML, APPLICATION_JSON)).build()
-        )).isTrue();
+        ).isExactMatch()).isTrue();
     }
 
     @Test
@@ -44,13 +44,13 @@ public class HeadersMatcherTest {
         assertThat(matcher.matches(
                 Request.get().header(() -> Header.header(Headers.ACCEPT, "text/html", "text/*")).build(),
                 Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_XML, APPLICATION_JSON)).build()
-        )).isFalse();
+        ).isExactMatch()).isFalse();
     }
 
     @Test
     public void matches_differentHeaderValue() {
         assertThat(matcher.matches(
                 Request.get().header(Headers.ACCEPT, APPLICATION_JSON).build(),
-                Request.get().header(Headers.ACCEPT, APPLICATION_XML).build())).isFalse();
+                Request.get().header(Headers.ACCEPT, APPLICATION_XML).build()).isExactMatch()).isFalse();
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class UriMatcher implements RequestMatcher {
     @Override
-    public boolean matches(Request request, Request otherRequest) {
-        return Objects.equals(request.getUri(), otherRequest.getUri());
+    public Result matches(Request request, Request otherRequest) {
+        return Result.of(Objects.equals(request.getUri(), otherRequest.getUri()));
     }
 }

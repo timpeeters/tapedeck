@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class BodyMatcher implements RequestMatcher {
     @Override
-    public boolean matches(Request request, Request otherRequest) {
-        return Arrays.equals(request.getBody(), otherRequest.getBody());
+    public Result matches(Request request, Request otherRequest) {
+        return Result.of(Arrays.equals(request.getBody(), otherRequest.getBody()));
     }
 }

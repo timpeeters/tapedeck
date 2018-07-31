@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class QueryParamsMatcher implements RequestMatcher {
     @Override
-    public boolean matches(Request request, Request otherRequest) {
-        return Objects.equals(request.getQueryParams(), otherRequest.getQueryParams());
+    public Result matches(Request request, Request otherRequest) {
+        return Result.of(Objects.equals(request.getQueryParams(), otherRequest.getQueryParams()));
     }
 }
