@@ -3,32 +3,32 @@ package io.playback.matcher;
 import java.util.StringJoiner;
 
 public final class Result {
-    private final boolean exactMatch;
+    private final double distance;
 
-    private Result(boolean exactMatch) {
-        this.exactMatch = exactMatch;
+    private Result(double distance) {
+        this.distance = distance;
     }
 
     public boolean isExactMatch() {
-        return exactMatch;
+        return distance == 0;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", getClass().getSimpleName() + "[", "]")
-                .add("exactMatch=" + isExactMatch())
+                .add("distance=" + distance)
                 .toString();
     }
 
     public static Result exactMatch() {
-        return new Result(true);
+        return new Result(0);
     }
 
     public static Result noMatch() {
-        return new Result(false);
+        return new Result(1);
     }
 
     public static Result of(boolean exactMatch) {
-        return new Result(exactMatch);
+        return exactMatch ? exactMatch() : noMatch();
     }
 }
