@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StringUtilsTest {
+class StringUtilsTest {
     @MethodSource("isEmptyValues")
     @ParameterizedTest(name = "{0}")
     void isEmpty(ArgumentsAccessor args) {

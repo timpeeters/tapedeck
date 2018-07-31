@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HeadersMatcherTest {
+class HeadersMatcherTest {
     private static final String APPLICATION_JSON = "application/json";
     private static final String APPLICATION_XML = "application/xml";
 
     private HeadersMatcher matcher;
 
     @BeforeEach
-    public void initialize() {
+    void initialize() {
         matcher = new HeadersMatcher();
     }
 

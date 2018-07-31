@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MediaTypeTest implements EqualsContractTester<MediaType>, HashCodeContractTester<MediaType> {
-
+class MediaTypeTest implements EqualsContractTester<MediaType>, HashCodeContractTester<MediaType> {
     @Test
-    public void testToString() {
+    void testToString() {
         assertThat(MediaType.of("text", "plain").toString()).isEqualTo("text/plain");
     }
 

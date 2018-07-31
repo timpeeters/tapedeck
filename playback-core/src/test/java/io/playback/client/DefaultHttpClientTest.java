@@ -15,12 +15,12 @@ import java.net.URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class DefaultHttpClientTest {
+class DefaultHttpClientTest {
     @RegisterExtension
     static HttpServerExtension server = HttpServerExtension.builder().build();
 
     @Test
-    public void execute() throws Exception {
+    void execute() throws Exception {
         Response response = new DefaultHttpClient().execute(Request.builder()
                 .method(RequestMethod.GET)
                 .uri(new URL(server.getBaseUrl(), "/").toURI())
@@ -31,14 +31,14 @@ public class DefaultHttpClientTest {
     }
 
     @Test
-    public void execute_malformedUrl() {
+    void execute_malformedUrl() {
         assertThatThrownBy(() -> new DefaultHttpClient().execute(Request.builder().uri(URI.create("x://test")).build()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Malformed URL");
     }
 
     @Test
-    public void execute_emulateIoException() {
+    void execute_emulateIoException() {
         assertThatThrownBy(() -> new DefaultHttpClient().execute(Request.builder()
                 .method(RequestMethod.GET)
                 .uri(URI.create("http://127.0.0.1:0/"))

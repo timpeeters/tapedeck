@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InMemoryRecordingRepositoryTest {
+class InMemoryRecordingRepositoryTest {
     @Test
-    public void emptyRepository() {
+    void emptyRepository() {
         assertThat(new InMemoryRecordingRepository().find()).isEmpty();
     }
 
     @Test
-    public void oneRecording() {
+    void oneRecording() {
         InMemoryRecordingRepository repository = new InMemoryRecordingRepository();
 
         repository.add(new Recording(Request.get().build(), Response.ok().build()));

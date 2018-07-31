@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class PlaybackTest {
+class PlaybackTest {
     private static final String OK_200 = "200";
 
     private Playback playback;
@@ -27,7 +27,7 @@ public class PlaybackTest {
     private HttpClient httpClient;
 
     @BeforeEach
-    public void initialize() {
+    void initialize() {
         playback = Playback.configure(Configuration.builder()
                 .httpClient(httpClient)
                 .matcher(RequestMatchers.DEFAULT)
@@ -35,19 +35,19 @@ public class PlaybackTest {
     }
 
     @Test
-    public void noMatchingRecording() {
+    void noMatchingRecording() {
         assertThatThrownBy(() -> playback.replay(Request.get().build())).isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
-    public void noMatchingRecording_differentRequestMethod() {
+    void noMatchingRecording_differentRequestMethod() {
         playback.record(Request.get().build(), Response.ok().build());
 
         assertThatThrownBy(() -> playback.replay(Request.post().build())).isInstanceOf(NoMatchingRecordingFound.class);
     }
 
     @Test
-    public void noMatchingRecording_differentUri() {
+    void noMatchingRecording_differentUri() {
         playback.record(Request.get("/a").build(), Response.ok().build());
 
         assertThatThrownBy(() -> playback.replay(Request.get("/b").build()))
@@ -55,7 +55,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void noMatchingRecording_differentAcceptHeader() {
+    void noMatchingRecording_differentAcceptHeader() {
         playback.record(
                 Request.get().header(Headers.ACCEPT, "application/json").build(),
                 Response.ok().build());
@@ -67,7 +67,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void noMatchingRecording_queryParam() {
+    void noMatchingRecording_queryParam() {
         playback.record(Request.get().queryParam("id", "1").build(),
                 Response.ok().build());
 
@@ -76,7 +76,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void noMatchingRecording_differentRequestBody() {
+    void noMatchingRecording_differentRequestBody() {
         playback.record(
                 Request.post().body("hello").build(),
                 Response.ok().build());
@@ -86,7 +86,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void replay_statusCode() {
+    void replay_statusCode() {
         playback.record(Request.get().build(), Response.builder().statusCode(OK_200).build());
 
         assertThat(playback.replay(Request.get().build())).satisfies(r ->
@@ -94,7 +94,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void replay_body() {
+    void replay_body() {
         playback.record(Request.get().build(), Response.builder().body("Hello world").build());
 
         assertThat(playback.replay(Request.get().build())).satisfies(r ->
@@ -102,7 +102,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void replay_bodyWithEncoding() {
+    void replay_bodyWithEncoding() {
         playback.record(Request.get().build(), Response.builder()
                 .header(Headers.CONTENT_TYPE, "text/plain;charset=iso-8859-1")
                 .body("Hélicoptère".getBytes(Charset.forName("ISO-8859-1"))).build());
@@ -112,7 +112,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void replay_header() {
+    void replay_header() {
         playback.record(
                 Request.get().build(),
                 Response.builder().header(Headers.CONTENT_TYPE, "application/json").build());
@@ -122,7 +122,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void play() {
+    void play() {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
         assertThat(playback.play(Request.get().build())).satisfies(response ->
@@ -130,7 +130,7 @@ public class PlaybackTest {
     }
 
     @Test
-    public void play_forwardOnlyOnce() {
+    void play_forwardOnlyOnce() {
         when(httpClient.execute(Request.get().build())).thenReturn(Response.ok().build());
 
         playback.play(Request.get().build());

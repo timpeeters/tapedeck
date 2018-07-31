@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, TempDirectoryExtension.class})
-public class FileRecordingRepositoryTest {
+class FileRecordingRepositoryTest {
     @Mock
     private Marshaller mockMarshaller;
 
@@ -30,12 +30,12 @@ public class FileRecordingRepositoryTest {
     private FileSystem mockFileSystem;
 
     @Test
-    public void find_emptyRepository(@TempDirectory Path dir) {
+    void find_emptyRepository(@TempDirectory Path dir) {
         assertThat(new FileRecordingRepository(dir, mockMarshaller).find()).isEmpty();
     }
 
     @Test
-    public void find_oneRecording(@TempDirectory Path dir) {
+    void find_oneRecording(@TempDirectory Path dir) {
         FileRecordingRepository repository = new FileRecordingRepository(dir, mockMarshaller);
         repository.add(new Recording(Request.get("/").build(), Response.ok().build()));
 
@@ -43,7 +43,7 @@ public class FileRecordingRepositoryTest {
     }
 
     @Test
-    public void find_multipleRecordings(@TempDirectory Path dir) {
+    void find_multipleRecordings(@TempDirectory Path dir) {
         FileRecordingRepository repository = new FileRecordingRepository(dir, mockMarshaller);
         repository.add(new Recording(Request.get("/a").build(), Response.ok().build()));
         repository.add(new Recording(Request.get("/b").build(), Response.ok().build()));
@@ -52,7 +52,7 @@ public class FileRecordingRepositoryTest {
     }
 
     @Test
-    public void find_listThrowsIoException(@TempDirectory Path dir) throws IOException {
+    void find_listThrowsIoException(@TempDirectory Path dir) throws IOException {
         when(mockFileSystem.list(any(Path.class))).thenThrow(new IOException());
 
         assertThatThrownBy(() -> new FileRecordingRepository(dir, mockMarshaller, mockFileSystem).find())
@@ -60,7 +60,7 @@ public class FileRecordingRepositoryTest {
     }
 
     @Test
-    public void find_readThrowsIoException(@TempDirectory Path dir) throws IOException {
+    void find_readThrowsIoException(@TempDirectory Path dir) throws IOException {
         when(mockFileSystem.list(any(Path.class))).thenReturn(Stream.of(mock(Path.class)));
         when(mockFileSystem.newBufferedReader(any(Path.class))).thenThrow(IOException.class);
 
@@ -69,7 +69,7 @@ public class FileRecordingRepositoryTest {
     }
 
     @Test
-    public void add_writeThrowsIoException(@TempDirectory Path dir) throws IOException {
+    void add_writeThrowsIoException(@TempDirectory Path dir) throws IOException {
         when(mockFileSystem.newBufferedWriter(any(Path.class))).thenThrow(new IOException());
 
         assertThatThrownBy(() -> new FileRecordingRepository(dir, mockMarshaller, mockFileSystem)

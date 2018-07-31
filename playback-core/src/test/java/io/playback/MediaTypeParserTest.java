@@ -11,19 +11,18 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class MediaTypeParserTest {
-
+class MediaTypeParserTest {
     @Test
-    public void parse_null() {
+    void parse_null() {
         assertThatThrownBy(() -> MediaType.parse(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void parse_emptyString() {
+    void parse_emptyString() {
         assertThatThrownBy(() -> MediaType.parse("")).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @MethodSource
+    @MethodSource("parse")
     @ParameterizedTest(name = "{0}")
     void parse(ArgumentsAccessor args) {
         assertThat(MediaType.parse(args.getString(0))).isEqualTo(args.get(1, MediaType.class));

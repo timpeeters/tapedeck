@@ -5,25 +5,25 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class RequestTest implements EqualsContractTester<Request>, HashCodeContractTester<Request> {
-    @Override
-    public Request getInstance() {
-        return Request.get("/").header(Headers.ACCEPT, "text/html").queryParam("id", "1").build();
-    }
-
+class RequestTest implements EqualsContractTester<Request>, HashCodeContractTester<Request> {
     @Test
-    public void get_invalidUri() {
+    void get_invalidUri() {
         assertThatThrownBy(() -> Request.get(" ")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void post_invalidUri() {
+    void post_invalidUri() {
         assertThatThrownBy(() -> Request.post(" ")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void toStringTest() {
+    void toStringTest() {
         assertThat(getInstance().toString())
                 .isEqualTo("Request[method=GET, uri=/, queryParams=[id=1], headers=[Accept=text/html]]");
+    }
+
+    @Override
+    public Request getInstance() {
+        return Request.get("/").header(Headers.ACCEPT, "text/html").queryParam("id", "1").build();
     }
 }

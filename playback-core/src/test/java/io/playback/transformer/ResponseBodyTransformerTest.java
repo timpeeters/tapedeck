@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ResponseBodyTransformerTest {
+class ResponseBodyTransformerTest {
     @Test
-    public void test() {
+    void test() {
         Response originalResponse = Response.builder().body("original").build();
 
         assertThat(new AbstractResponseBodyTransformer() {
