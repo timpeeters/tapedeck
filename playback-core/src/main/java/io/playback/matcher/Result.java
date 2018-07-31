@@ -1,5 +1,6 @@
 package io.playback.matcher;
 
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 public final class Result {
@@ -7,6 +8,10 @@ public final class Result {
 
     private Result(double distance) {
         this.distance = distance;
+    }
+
+    public double getDistance() {
+        return distance;
     }
 
     public boolean isExactMatch() {
@@ -18,6 +23,10 @@ public final class Result {
         return new StringJoiner(", ", getClass().getSimpleName() + "[", "]")
                 .add("distance=" + distance)
                 .toString();
+    }
+
+    public static Result aggregate(Result... results) {
+        return new Result(Arrays.stream(results).mapToDouble(Result::getDistance).average().orElse(0));
     }
 
     public static Result exactMatch() {

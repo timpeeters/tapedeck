@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 
@@ -41,6 +42,10 @@ public class Request {
 
     public Map<String, Header> getHeaders() {
         return headers;
+    }
+
+    public Optional<Header> getHeader(String headerName) {
+        return Optional.ofNullable(headers.get(headerName));
     }
 
     public byte[] getBody() {
