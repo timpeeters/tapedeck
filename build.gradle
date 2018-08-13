@@ -30,7 +30,7 @@ subprojects {
 
     checkstyle {
         ignoreFailures = true
-        toolVersion = '8.11'
+        toolVersion = '8.12'
     }
 
     dependencies {
