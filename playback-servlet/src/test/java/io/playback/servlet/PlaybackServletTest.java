@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class PlaybackServletTest {
+class PlaybackServletTest {
     @Test
-    public void service() throws Exception {
+    void service() throws Exception {
         MockHttpServletRequest req = MockHttpServletRequestBuilder.get("/").build();
         MockHttpServletResponse resp = new MockHttpServletResponse();
 

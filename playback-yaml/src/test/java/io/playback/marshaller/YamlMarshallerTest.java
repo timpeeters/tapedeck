@@ -10,11 +10,11 @@ import java.io.StringWriter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class YamlMarshallerTest {
+class YamlMarshallerTest {
     private final YamlMarshaller marshaller = new YamlMarshaller();
 
     @Test
-    public void marshalAndUnmarshal() {
+    void marshalAndUnmarshal() {
         Recording recording = new Recording(Request.get().build(), Response.ok().build());
 
         StringWriter writer = new StringWriter();

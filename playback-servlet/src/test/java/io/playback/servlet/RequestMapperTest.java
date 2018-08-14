@@ -10,9 +10,9 @@ import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RequestMapperTest {
+class RequestMapperTest {
     @Test
-    public void map() {
+    void map() {
         assertThat(RequestMapper.map(MockHttpServletRequestBuilder.get("/")
                 .queryString("q=test")
                 .header(Headers.ACCEPT, "application/json")
