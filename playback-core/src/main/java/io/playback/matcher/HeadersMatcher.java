@@ -13,6 +13,9 @@ public class HeadersMatcher implements RequestMatcher {
     }
 
     private Stream<String> headerNames(Request request, Request otherRequest) {
-        return Stream.concat(request.getHeaders().keySet().stream(), otherRequest.getHeaders().keySet().stream());
+        return Stream.concat(request.getHeaders().keySet().stream(), otherRequest.getHeaders()
+                .keySet()
+                .stream()
+                .distinct());
     }
 }

@@ -23,6 +23,10 @@ public final class Header {
         return values;
     }
 
+    public boolean containsValue(String value) {
+        return values.contains(value);
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (!(otherObject instanceof Header)) {

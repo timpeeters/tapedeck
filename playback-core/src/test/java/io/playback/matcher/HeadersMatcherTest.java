@@ -53,4 +53,15 @@ class HeadersMatcherTest {
                 Request.get().header(Headers.ACCEPT, APPLICATION_JSON).build(),
                 Request.get().header(Headers.ACCEPT, APPLICATION_XML).build()).isExactMatch()).isFalse();
     }
+
+    @Test
+    public void matches_multipleHeaderValuesOnlyOneMatches() {
+        assertThat(matcher.matches(
+                Request.get().header(Headers.ACCEPT, APPLICATION_JSON).build(),
+                Request.get().header(() -> Header.header(Headers.ACCEPT, APPLICATION_JSON, APPLICATION_XML)).build()))
+                .satisfies(r -> {
+                    assertThat(r.isExactMatch()).isFalse();
+                    assertThat(r.getDistance()).isEqualTo(0.5);
+                });
+    }
 }
