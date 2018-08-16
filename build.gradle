@@ -40,7 +40,7 @@ subprojects {
 
     dependencyManagement {
         dependencies {
-            dependency 'org.assertj:assertj-core:3.10.0'
+            dependency 'org.assertj:assertj-core:3.11.0'
         }
     }
 
