@@ -31,11 +31,20 @@ public class CustomTypes implements TypeRegistryConfigurer {
                         Request.builder()
                                 .method(RequestMethod.valueOf(entry.get("method")))
                                 .uri(URI.create(entry.get("uri")))
+                                .headers(Arrays.stream(entry.get("headers").split(","))
+                                        .map(this::toHeader)
+                                        .toArray(Header[]::new))
                                 .build(),
                         Response.builder()
                                 .statusCode(entry.get("status code"))
                                 .statusText(entry.get("status text"))
                                 .build()));
+    }
+
+    private Header toHeader(String entry) {
+        String[] header = entry.split(":");
+
+        return Header.header(header[0].trim(), header[1].trim());
     }
 
     private ParameterType<RequestMethod> requestMethodType() {

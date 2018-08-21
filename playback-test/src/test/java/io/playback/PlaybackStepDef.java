@@ -1,6 +1,7 @@
 package io.playback;
 
 import cucumber.api.java8.En;
+import io.cucumber.datatable.DataTable;
 
 import java.net.URI;
 
@@ -16,5 +17,15 @@ public class PlaybackStepDef implements En {
                         .method(method)
                         .uri(uri)
                         .build()));
+
+        When("I receive a {requestMethod} {uri} request with the following request headers:",
+                (RequestMethod method, URI uri, DataTable headers) ->
+                        world.response = world.playback.play(Request.builder()
+                                .method(method)
+                                .uri(uri)
+                                .headers(headers.<String, String> asMap(String.class, String.class).entrySet().stream()
+                                        .map(e -> Header.header(e.getKey(), e.getValue()))
+                                        .toArray(Header[]::new))
+                                .build()));
     }
 }
