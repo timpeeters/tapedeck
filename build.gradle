@@ -35,7 +35,7 @@ subprojects {
 
     dependencies {
         implementation 'org.junit:junit-bom:5.3.1'
-        implementation 'org.springframework.boot:spring-boot-dependencies:2.0.4.RELEASE'
+        implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE'
     }
 
     dependencyManagement {
