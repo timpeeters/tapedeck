@@ -11,6 +11,8 @@ import java.io.IOException;
 
 @WebServlet
 public class PlaybackServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
     private final Playback playback = Playback.create();
 
     @Override
