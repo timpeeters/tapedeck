@@ -2,7 +2,7 @@ dependencies {
     testImplementation project(':playback-core')
 
     testImplementation 'io.cucumber:cucumber-expressions:6.1.0'
-    testImplementation 'io.cucumber:cucumber-java8:3.0.2'
+    testImplementation 'io.cucumber:cucumber-java8:4.0.0'
     testImplementation 'io.cucumber:cucumber-junit:3.0.2'
     testImplementation 'io.cucumber:cucumber-picocontainer:3.0.2'
     testImplementation 'org.assertj:assertj-core'
