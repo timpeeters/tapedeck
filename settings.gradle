@@ -4,5 +4,3 @@ include 'playback-core'
 include 'playback-servlet'
 include 'playback-test'
 include 'playback-yaml'
-
-enableFeaturePreview('IMPROVED_POM_SUPPORT')
