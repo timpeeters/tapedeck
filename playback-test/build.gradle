@@ -6,7 +6,7 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-junit:4.3.1'
     testImplementation 'io.cucumber:cucumber-picocontainer:4.3.1'
     testImplementation 'org.assertj:assertj-core'
-    testImplementation 'org.mockito:mockito-core:2.27.0'
+    testImplementation 'org.mockito:mockito-core:2.28.1'
 }
 
 test {
