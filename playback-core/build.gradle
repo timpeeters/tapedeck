@@ -5,6 +5,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testImplementation 'org.mockito:mockito-core:2.28.2'
-    testImplementation 'org.mockito:mockito-junit-jupiter:2.27.5'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.28.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
