@@ -29,12 +29,12 @@ public class TempDirectoryExtension implements AfterEachCallback, Extension, Par
     }
 
     @Override
-    public boolean supportsParameter(ParameterContext param, ExtensionContext ext) throws ParameterResolutionException {
+    public boolean supportsParameter(ParameterContext param, ExtensionContext ext) {
         return param.isAnnotated(TempDirectory.class) && param.getParameter().getType() == Path.class;
     }
 
     @Override
-    public Object resolveParameter(ParameterContext param, ExtensionContext ext) throws ParameterResolutionException {
+    public Object resolveParameter(ParameterContext param, ExtensionContext ext) {
         return getLocalStore(ext).getOrComputeIfAbsent(KEY, key -> createTempDir(ext));
     }
 
