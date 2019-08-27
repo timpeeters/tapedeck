@@ -2,7 +2,7 @@ apply plugin: 'java-library'
 
 dependencies {
     api project(':playback-core')
-    api 'org.yaml:snakeyaml:1.24'
+    api 'org.yaml:snakeyaml:1.25'
 
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
