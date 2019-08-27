@@ -4,7 +4,7 @@ jdk:
   - openjdk11
 
 before_install:
-  - wget -q -O ~/codacy-coverage-reporter-assembly.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.0/codacy-coverage-reporter-6.0.0-assembly.jar
+  - wget -q -O ~/codacy-coverage-reporter-assembly.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.4/codacy-coverage-reporter-6.0.4-assembly.jar
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
