@@ -1,7 +1,7 @@
 dependencies {
     testImplementation project(':playback-core')
 
-    testImplementation 'io.cucumber:cucumber-expressions:8.0.0'
+    testImplementation 'io.cucumber:cucumber-expressions:8.0.1'
     testImplementation 'io.cucumber:cucumber-java8:4.7.4'
     testImplementation 'io.cucumber:cucumber-junit:4.7.4'
     testImplementation 'io.cucumber:cucumber-picocontainer:4.7.4'
