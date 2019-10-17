@@ -35,7 +35,7 @@ subprojects {
 
     dependencies {
         implementation(enforcedPlatform('org.junit:junit-bom:5.5.2'))
-        implementation(enforcedPlatform('org.springframework.boot:spring-boot-dependencies:2.1.9.RELEASE'))
+        implementation(enforcedPlatform('org.springframework.boot:spring-boot-dependencies:2.2.0.RELEASE'))
     }
 
     dependencyManagement {
