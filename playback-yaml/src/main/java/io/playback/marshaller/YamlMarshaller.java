@@ -2,7 +2,9 @@ package io.playback.marshaller;
 
 import io.playback.Recording;
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
@@ -24,18 +26,11 @@ public class YamlMarshaller implements Marshaller {
     }
 
     private Yaml yaml() {
-        Yaml yaml = new Yaml(representer(), dumperOptions());
+        LoaderOptions loaderOpts = loaderOptions();
+        Yaml yaml = new Yaml(new Constructor(loaderOpts), representer(), dumperOptions(), loaderOpts);
         yaml.setBeanAccess(BeanAccess.FIELD);
 
         return yaml;
-    }
-
-    private DumperOptions dumperOptions() {
-        DumperOptions dumperOptions = new DumperOptions();
-        dumperOptions.setDefaultFlowStyle(BLOCK);
-        dumperOptions.setWidth(256);
-
-        return dumperOptions;
     }
 
     private Representer representer() {
@@ -43,5 +38,20 @@ public class YamlMarshaller implements Marshaller {
         representer.addClassTag(YamlRecording.class, Tag.MAP);
 
         return representer;
+    }
+
+    private DumperOptions dumperOptions() {
+        DumperOptions opts = new DumperOptions();
+        opts.setDefaultFlowStyle(BLOCK);
+        opts.setWidth(256);
+
+        return opts;
+    }
+
+    private LoaderOptions loaderOptions() {
+        LoaderOptions opts = new LoaderOptions();
+        opts.setAllowRecursiveKeys(false);
+
+        return opts;
     }
 }
