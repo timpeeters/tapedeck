@@ -1,6 +1,5 @@
 plugins {
     id "checkstyle"
-    id "io.spring.dependency-management" version "1.0.9.RELEASE"
     id "jacoco"
     id "java"
     id "pmd"
@@ -18,6 +17,7 @@ allprojects {
 
     repositories {
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -34,14 +34,14 @@ subprojects {
     }
 
     dependencies {
-        implementation(enforcedPlatform('org.junit:junit-bom:5.6.0'))
-        implementation(enforcedPlatform('org.springframework.boot:spring-boot-dependencies:2.2.5.RELEASE'))
-    }
-
-    dependencyManagement {
-        dependencies {
-            dependency 'org.assertj:assertj-core:3.15.0'
+        constraints {
+            implementation 'org.assertj:assertj-core:3.15.0'
+            implementation 'org.mockito:mockito-core:3.3.0'
+            implementation 'org.yaml:snakeyaml:1.25'
         }
+
+        implementation platform('org.junit:junit-bom:5.6.0')
+        implementation platform('org.springframework.boot:spring-boot-dependencies:2.2.5.RELEASE')
     }
 
     pmd {
